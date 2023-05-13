@@ -1,14 +1,16 @@
 import { PreloadedState, combineReducers, configureStore } from '@reduxjs/toolkit';
-import { stateReducer } from 'shared';
+import { stateReducer, superJobAPI } from 'shared';
 
 const rootReducer = combineReducers({
-  stateReducer
+  stateReducer,
+  [superJobAPI.reducerPath]: superJobAPI.reducer
 });
 
 export const setupStore = (preloadedState?: PreloadedState<TRootState>) => {
   return configureStore({
     reducer: rootReducer,
-    preloadedState
+    preloadedState,
+    middleware: (getDefaultMiddleWare) => getDefaultMiddleWare().concat(superJobAPI.middleware)
   });
 };
 

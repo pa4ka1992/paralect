@@ -17,7 +17,7 @@ export const superJobAPI = createApi({
     prepareHeaders: prepareHeaders
   }),
   endpoints: (builder) => ({
-    getAccessToken: builder.query<Authorization | null, {}>({
+    getAccessToken: builder.query<Authorization | undefined, {}>({
       query: () => ({
         url: '/2.0/oauth2/password',
         params: {
@@ -29,11 +29,14 @@ export const superJobAPI = createApi({
         }
       }),
       transformResponse: (response: unknown) => {
-        return isAuthorizationResponse(response) ? response : null;
+        return isAuthorizationResponse(response) ? response : undefined;
       }
     }),
 
-    searchVacancies: builder.query<IVacancy[] | null, { keyword: string; payment_from: string; payment_to: string }>({
+    searchVacancies: builder.query<
+      IVacancy[] | undefined,
+      { keyword: string; payment_from: string; payment_to: string }
+    >({
       query: ({ keyword, payment_from, payment_to }) => ({
         url: '/2.0/oauth2/vacancies/',
         params: {
@@ -45,28 +48,29 @@ export const superJobAPI = createApi({
         }
       }),
       transformResponse: (response: unknown) => {
-        return isVacancies(response) ? response : null;
+        return isVacancies(response) ? response : undefined;
       }
     }),
 
-    getVacancy: builder.query<IVacancy | null, { id: string }>({
+    getVacancy: builder.query<IVacancy | undefined, { id: string }>({
       query: ({ id }) => ({
         url: `/2.0/vacancies/:${id}/`
       }),
       transformResponse: (response: unknown) => {
-        return isVacancy(response) ? response : null;
+        return isVacancy(response) ? response : undefined;
       }
     }),
 
-    getCatalogues: builder.query<ICatalogue[] | null, {}>({
+    getCatalogues: builder.query<ICatalogue[] | undefined, {}>({
       query: () => ({
         url: '/2.0/catalogues/'
       }),
       transformResponse: (response: unknown) => {
-        return isCatalogues(response) ? response : null;
+        return isCatalogues(response) ? response : undefined;
       }
     })
   })
 });
 
-export const { useGetAccessTokenQuery } = superJobAPI;
+export const { useGetAccessTokenQuery, useGetCataloguesQuery, useGetVacancyQuery, useLazySearchVacanciesQuery } =
+  superJobAPI;
