@@ -1,10 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IVacancy } from '../types';
 
-export interface IVacancy {
-  blabla: string;
-}
-
-export interface IState {
+interface IState {
   favorites: IVacancy[];
 }
 
