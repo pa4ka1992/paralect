@@ -1,5 +1,6 @@
 import { FC, Suspense, useContext, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
+import { AppShell } from '@mantine/core';
 import { Header } from 'widgets';
 import { StateContext, useGetAccessTokenQuery } from 'shared';
 
@@ -14,9 +15,9 @@ export const Layout: FC = () => {
   }, [isSuccess, data, localStorage]);
 
   return (
-    <section>
+    <AppShell>
       <Header />
       <Suspense fallback="loading...">{isLoading ? 'loading...' : <Outlet />}</Suspense>
-    </section>
+    </AppShell>
   );
 };
