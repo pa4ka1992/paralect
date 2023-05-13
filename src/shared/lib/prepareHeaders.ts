@@ -12,7 +12,7 @@ export const prepareHeaders: PrepareHeaders = (headers, api) => {
   headers.set('x-secret-key', import.meta.env.VITE_SECRET_API_KEY);
   headers.set('X-Api-App-Id', import.meta.env.VITE_API_CLIENT_SECRET);
 
-  if (api.endpoint !== '/2.0/oauth2/password') {
+  if (api.endpoint !== 'getAccessToken') {
     const accessToken = localStorage.getItem('access_token');
 
     if (accessToken) {

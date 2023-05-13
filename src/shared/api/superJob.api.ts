@@ -48,7 +48,7 @@ export const superJobAPI = createApi({
         }
       }),
       transformResponse: (response: unknown) => {
-        return isVacancies(response) ? response : undefined;
+        return isVacancies(response) ? response.objects : undefined;
       }
     }),
 
@@ -72,5 +72,5 @@ export const superJobAPI = createApi({
   })
 });
 
-export const { useGetAccessTokenQuery, useGetCataloguesQuery, useGetVacancyQuery, useLazySearchVacanciesQuery } =
+export const { useGetAccessTokenQuery, useGetCataloguesQuery, useGetVacancyQuery, useSearchVacanciesQuery } =
   superJobAPI;

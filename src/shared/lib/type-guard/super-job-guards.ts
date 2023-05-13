@@ -2,13 +2,13 @@ import { IVacancy } from 'shared/model';
 import { Authorization, ICatalogue } from '../../model/types';
 
 const requiredVacancyFields = [
-  'profession ',
+  'profession',
   'firm_name',
   'town',
   'type_of_work',
   'payment_to',
   'payment_from',
-  ' currency '
+  'currency'
 ];
 
 export const isAuthorizationResponse = (response: unknown): response is Authorization => {
@@ -25,15 +25,19 @@ export const isCatalogues = (response: unknown): response is ICatalogue[] => {
 
 export const isVacancy = (response: unknown): response is IVacancy => {
   if (response instanceof Object) {
-    return requiredVacancyFields.every((field) => field in response);
+    return requiredVacancyFields.every((field) => {
+      return field in response;
+    });
   }
 
   return false;
 };
 
-export const isVacancies = (response: unknown): response is IVacancy[] => {
-  if (response instanceof Array) {
-    return response.every((vacancy) => isVacancy(vacancy));
+export const isVacancies = (response: unknown): response is { objects: IVacancy[] } => {
+  if (response instanceof Object && 'objects' in response) {
+    if (response.objects instanceof Array) {
+      return response.objects.every((vacancy) => isVacancy(vacancy));
+    }
   }
 
   return false;
