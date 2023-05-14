@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import { VacancyBox } from 'widgets';
+import { VacanciesOverview } from 'widgets';
 
 export const Favorites: FC = () => {
   return (
     <section>
-      <VacancyBox />
+      <VacanciesOverview perPage={4} />
     </section>
   );
 };

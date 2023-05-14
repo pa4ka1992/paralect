@@ -35,16 +35,16 @@ export const superJobAPI = createApi({
 
     searchVacancies: builder.query<
       IVacancy[] | undefined,
-      { keyword: string; payment_from: string; payment_to: string }
+      { keyword: string; payment_from: string; payment_to: string; catalogues: string }
     >({
-      query: ({ keyword, payment_from, payment_to }) => ({
+      query: ({ keyword, payment_from, payment_to, catalogues }) => ({
         url: '/2.0/oauth2/vacancies/',
         params: {
           published: 1,
           keyword: keyword,
           payment_from: payment_from,
           payment_to: payment_to,
-          catalogues: 33
+          catalogues: catalogues
         }
       }),
       transformResponse: (response: { objects: unknown }) => {

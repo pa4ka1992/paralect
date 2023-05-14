@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Group, Stack } from '@mantine/core';
 import { Searchbar } from 'features';
-import { Filters, VacancyBox } from 'widgets';
+import { Filters, VacanciesOverview } from 'widgets';
 
 export const Main: FC = () => {
   return (
@@ -9,7 +9,7 @@ export const Main: FC = () => {
       <Filters />
       <Stack>
         <Searchbar />
-        <VacancyBox />
+        <VacanciesOverview perPage={4} />
       </Stack>
     </Group>
   );

@@ -6,7 +6,7 @@ import { useLazyGetVacancyQuery } from 'shared';
 
 export const VacancyView: FC = () => {
   const { id } = useParams<{ id: string }>();
-  const [getVacancy, { data }] = useLazyGetVacancyQuery();
+  const [getVacancy, { data: vacancy }] = useLazyGetVacancyQuery();
 
   useEffect(() => {
     if (id) {
@@ -14,14 +14,14 @@ export const VacancyView: FC = () => {
     }
   }, [id, getVacancy]);
 
-  if (!data) {
-    return null;
-  }
-
   return (
-    <Stack>
-      <VacancyItem vacancy={data} />
-      <VacancyViewDescription vacancy={data} />
-    </Stack>
+    <>
+      {vacancy && (
+        <Stack>
+          <VacancyItem vacancy={vacancy} />
+          <VacancyViewDescription vacancy={vacancy} />
+        </Stack>
+      )}
+    </>
   );
 };
