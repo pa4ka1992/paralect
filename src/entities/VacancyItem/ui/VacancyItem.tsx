@@ -1,4 +1,5 @@
-import { Group, NavLink, Paper, Text } from '@mantine/core';
+import { Group, NavLink, Paper, Text, ActionIcon } from '@mantine/core';
+import { IconStar, IconMapPin } from '@tabler/icons-react';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { uid } from 'uid';
@@ -17,7 +18,12 @@ export const VacancyItem: FC<VacancyProps> = ({ vacancy }) => {
         </Text>
         <Text>{vacancy.type_of_work.title}</Text>
       </Group>
-      <Text>{vacancy.town.title}</Text>
+      <Text>
+        <IconMapPin size="1.125rem" /> {vacancy.town.title}
+      </Text>
+      <ActionIcon>
+        <IconStar size="1.125rem" />
+      </ActionIcon>
     </Paper>
   );
 };
