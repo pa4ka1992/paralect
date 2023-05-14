@@ -1,6 +1,6 @@
 export enum ROUTES {
   main = '/',
-  vacancy = '/vacancy',
+  vacancy = '/vacancy/:id',
   favorites = '/favorites',
   notFound = '*'
 }
