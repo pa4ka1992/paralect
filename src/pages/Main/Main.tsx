@@ -1,13 +1,16 @@
 import { FC } from 'react';
+import { Group, Stack } from '@mantine/core';
 import { Searchbar } from 'features';
 import { Filters, VacancyBox } from 'widgets';
 
 export const Main: FC = () => {
   return (
-    <section>
+    <Group>
       <Filters />
-      <Searchbar />
-      <VacancyBox />
-    </section>
+      <Stack>
+        <Searchbar />
+        <VacancyBox />
+      </Stack>
+    </Group>
   );
 };
