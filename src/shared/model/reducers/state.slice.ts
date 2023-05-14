@@ -1,11 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IVacancy } from '../types';
 
 interface IState {
-  favorites: IVacancy[];
+  search: string;
+  filters: {
+    category: string;
+    paymentFrom: string;
+    paymentTo: string;
+  };
+  favorites: number[];
 }
 
 const initialState: IState = {
+  search: '',
+  filters: {
+    category: '',
+    paymentFrom: '',
+    paymentTo: ''
+  },
   favorites: []
 };
 
@@ -13,8 +24,34 @@ export const stateSlice = createSlice({
   name: 'State',
   initialState,
   reducers: {
-    setState(state, action: PayloadAction<IVacancy>) {
+    addFavorite(state, action: PayloadAction<number>) {
       state.favorites.push(action.payload);
+    },
+
+    removeFavorite(state, action: PayloadAction<number>) {
+      state.favorites = state.favorites.filter((vacancyId) => {
+        vacancyId !== action.payload;
+      });
+    },
+
+    setSearch(state, action: PayloadAction<string>) {
+      state.search = action.payload;
+    },
+
+    setCategory(state, action: PayloadAction<string>) {
+      state.filters.category = action.payload;
+    },
+
+    setPaymentTo(state, action: PayloadAction<string>) {
+      state.filters.paymentTo = action.payload;
+    },
+
+    setPaymentFrom(state, action: PayloadAction<string>) {
+      state.filters.paymentFrom = action.payload;
+    },
+
+    resetFilters(state) {
+      state.filters = initialState.filters;
     }
   }
 });
