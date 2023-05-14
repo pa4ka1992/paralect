@@ -8,6 +8,7 @@ export type Authorization = {
 };
 
 export interface IVacancy {
+  id: number;
   profession: string;
   firm_name: string;
   town: {
@@ -19,6 +20,7 @@ export interface IVacancy {
   payment_to: number;
   payment_from: number;
   currency: number;
+  vacancyRichText: string;
 }
 
 export interface ICatalogue {

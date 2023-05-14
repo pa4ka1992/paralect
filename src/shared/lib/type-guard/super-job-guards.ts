@@ -2,13 +2,15 @@ import { IVacancy } from 'shared/model';
 import { Authorization, ICatalogue } from '../../model/types';
 
 const requiredVacancyFields = [
+  'id',
   'profession',
   'firm_name',
   'town',
   'type_of_work',
   'payment_to',
   'payment_from',
-  'currency'
+  'currency',
+  'vacancyRichText'
 ];
 
 export const isAuthorizationResponse = (response: unknown): response is Authorization => {
@@ -33,11 +35,9 @@ export const isVacancy = (response: unknown): response is IVacancy => {
   return false;
 };
 
-export const isVacancies = (response: unknown): response is { objects: IVacancy[] } => {
-  if (response instanceof Object && 'objects' in response) {
-    if (response.objects instanceof Array) {
-      return response.objects.every((vacancy) => isVacancy(vacancy));
-    }
+export const isVacancies = (response: unknown): response is IVacancy[] => {
+  if (response instanceof Array) {
+    return response.every((vacancy) => isVacancy(vacancy));
   }
 
   return false;
