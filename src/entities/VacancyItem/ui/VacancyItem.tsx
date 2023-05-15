@@ -1,12 +1,25 @@
 import { Group, NavLink, Paper, Text, ActionIcon } from '@mantine/core';
-import { IconStar, IconMapPin } from '@tabler/icons-react';
+import { IconStar, IconStarFilled, IconMapPin } from '@tabler/icons-react';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { uid } from 'uid';
-import { VacancyProps } from 'shared';
+import { VacancyProps, useAppActions, useAppSelector } from 'shared';
 
 export const VacancyItem: FC<VacancyProps> = ({ vacancy }) => {
   const navigate = useNavigate();
+
+  const { favorites } = useAppSelector((state) => state.stateReducer);
+  const { updateFavorites } = useAppActions();
+
+  const changeFavorites = (id: number) => {
+    updateFavorites(id);
+  };
+
+  const setFavoriteIcon = (vacancyId: number) => {
+    const isInFavorites = favorites.includes(vacancyId);
+
+    return isInFavorites ? <IconStarFilled size="1.125rem" /> : <IconStar size="1.125rem" />;
+  };
 
   return (
     <Paper key={uid()}>
@@ -21,8 +34,8 @@ export const VacancyItem: FC<VacancyProps> = ({ vacancy }) => {
       <Text>
         <IconMapPin size="1.125rem" /> {vacancy.town.title}
       </Text>
-      <ActionIcon>
-        <IconStar size="1.125rem" />
+      <ActionIcon color="blue" onClick={() => changeFavorites(vacancy.id)}>
+        {setFavoriteIcon(vacancy.id)}
       </ActionIcon>
     </Paper>
   );

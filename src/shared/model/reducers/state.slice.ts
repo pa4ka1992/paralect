@@ -26,14 +26,13 @@ export const stateSlice = createSlice({
   name: 'State',
   initialState,
   reducers: {
-    addFavorite(state, action: PayloadAction<number>) {
-      state.favorites.push(action.payload);
-    },
+    updateFavorites(state, action: PayloadAction<number>) {
+      if (state.favorites.includes(action.payload)) {
+        state.favorites = state.favorites.filter((vacancyId) => vacancyId !== action.payload);
+        return;
+      }
 
-    removeFavorite(state, action: PayloadAction<number>) {
-      state.favorites = state.favorites.filter((vacancyId) => {
-        vacancyId !== action.payload;
-      });
+      state.favorites.push(action.payload);
     },
 
     setSearch(state, action: PayloadAction<string>) {
