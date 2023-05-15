@@ -6,12 +6,13 @@ import { useAppActions, useAppSelector, useGetCataloguesQuery } from 'shared';
 export const CategoryFilter: FC = () => {
   const [isOpened, setIsOpened] = useState(false);
 
-  const { setCategory } = useAppActions();
+  const { setCategory, setSkipQuery } = useAppActions();
   const { category } = useAppSelector((state) => state.stateReducer.filters);
 
   const { data: categories } = useGetCataloguesQuery({});
 
-  const handeCategory = (value: string) => {
+  const changeCategory = (value: string) => {
+    setSkipQuery(true);
     setCategory(value);
   };
 
@@ -21,7 +22,7 @@ export const CategoryFilter: FC = () => {
         <Select
           value={category}
           data={categories.map((category) => ({ label: category.title, value: String(category.key) }))}
-          onChange={handeCategory}
+          onChange={changeCategory}
           onDropdownOpen={() => setIsOpened(true)}
           onDropdownClose={() => setIsOpened(false)}
           rightSectionWidth={30}

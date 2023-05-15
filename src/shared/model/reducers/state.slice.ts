@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface IState {
   search: string;
+  skipQuery: boolean;
   filters: {
     category: string;
     paymentFrom?: number | '';
@@ -12,6 +13,7 @@ interface IState {
 
 const initialState: IState = {
   search: '',
+  skipQuery: false,
   filters: {
     category: '',
     paymentFrom: '',
@@ -52,6 +54,10 @@ export const stateSlice = createSlice({
 
     resetFilters(state) {
       state.filters = initialState.filters;
+    },
+
+    setSkipQuery(state, action: PayloadAction<boolean>) {
+      state.skipQuery = action.payload;
     }
   }
 });

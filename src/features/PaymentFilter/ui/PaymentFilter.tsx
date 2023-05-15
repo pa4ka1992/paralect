@@ -2,22 +2,30 @@ import { NumberInput, Stack } from '@mantine/core';
 import { FC } from 'react';
 import { useAppActions, useAppSelector } from 'shared';
 
+type InputHadler = (paymentFromPayload: number | '') => void;
+
 export const PaymentFilter: FC = () => {
   const { paymentFrom, paymentTo } = useAppSelector((state) => state.stateReducer.filters);
-  const { setPaymentFrom, setPaymentTo } = useAppActions();
+  const { setPaymentFrom, setPaymentTo, setSkipQuery } = useAppActions();
 
-  const handlePaymentFrom = (paymentFromPayload: number | '') => {
+  const changePaymentFrom: InputHadler = (paymentFromPayload) => {
+    setSkipQuery(true);
     setPaymentFrom(paymentFromPayload);
 
-    if (paymentTo && typeof paymentFromPayload === 'number' && paymentFromPayload > paymentTo) {
+    const isUpdateTo = paymentTo && typeof paymentFromPayload === 'number' && paymentFromPayload > paymentTo;
+
+    if (isUpdateTo) {
       setPaymentTo(paymentFromPayload);
     }
   };
 
-  const handlePaymentTo = (paymentToPayload: number | '') => {
+  const changePaymentTo: InputHadler = (paymentToPayload) => {
+    setSkipQuery(true);
     setPaymentTo(paymentToPayload);
 
-    if (paymentFrom && typeof paymentToPayload === 'number' && paymentToPayload < paymentFrom) {
+    const isUpdateFrom = paymentFrom && typeof paymentToPayload === 'number' && paymentToPayload < paymentFrom;
+
+    if (isUpdateFrom) {
       setPaymentFrom(paymentToPayload);
     }
   };
@@ -26,7 +34,7 @@ export const PaymentFilter: FC = () => {
     <Stack>
       <NumberInput
         value={paymentFrom}
-        onChange={handlePaymentFrom}
+        onChange={changePaymentFrom}
         type="number"
         min={0}
         step={500}
@@ -35,7 +43,7 @@ export const PaymentFilter: FC = () => {
       />
       <NumberInput
         value={paymentTo}
-        onChange={handlePaymentTo}
+        onChange={changePaymentTo}
         type="number"
         min={Number(paymentFrom)}
         step={500}

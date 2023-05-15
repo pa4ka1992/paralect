@@ -1,7 +1,7 @@
 import { Box } from '@mantine/core';
 import { FC, useMemo, useState } from 'react';
 import { Pagination, VacancyList } from 'features';
-import { useSearchVacanciesQuery } from 'shared';
+import { useAppSelector, useSearchVacanciesQuery } from 'shared';
 
 type Props = {
   perPage: number;
@@ -10,12 +10,22 @@ type Props = {
 export const VacanciesOverview: FC<Props> = ({ perPage }) => {
   const [page, setPage] = useState(1);
 
-  const { data: vacancies } = useSearchVacanciesQuery({
-    keyword: '',
-    payment_from: '',
-    payment_to: '',
-    catalogues: ''
+  const { search, category, paymentTo, paymentFrom, skipQuery } = useAppSelector((state) => {
+    const { filters, search, skipQuery } = state.stateReducer;
+    const { category, paymentTo, paymentFrom } = filters;
+
+    return { search, skipQuery, category, paymentTo, paymentFrom };
   });
+
+  const { data: vacancies } = useSearchVacanciesQuery(
+    {
+      keyword: search,
+      payment_from: paymentFrom ? String(paymentFrom) : '',
+      payment_to: paymentTo ? String(paymentTo) : '',
+      catalogues: category
+    },
+    { skip: skipQuery }
+  );
 
   const vacanciesOnPage = useMemo(() => {
     const endOffset = page - 1 + perPage;
