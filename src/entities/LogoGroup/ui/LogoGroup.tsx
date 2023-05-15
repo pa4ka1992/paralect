@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import { Box, Text, Image } from '@mantine/core';
+import { Box, Text } from '@mantine/core';
 import { NavLink } from 'react-router-dom';
-import logo from './assets/logo.png';
+import { Logo } from './assets';
 
 export const LogoGroup: FC = () => {
   return (
@@ -14,7 +14,7 @@ export const LogoGroup: FC = () => {
           height: '100%'
         })}
       >
-        <Image height={30} width={30} src={logo} />
+        <Logo />
         <Text size="lg" fw={600} ff="Poppins, sans-serif">
           Jobored
         </Text>
