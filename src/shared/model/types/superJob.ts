@@ -24,5 +24,6 @@ export interface IVacancy {
 }
 
 export interface ICatalogue {
+  key: number;
   title: string;
 }

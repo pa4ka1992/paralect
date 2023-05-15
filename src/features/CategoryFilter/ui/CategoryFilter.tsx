@@ -1,26 +1,39 @@
 import { FC, useState } from 'react';
 import { Select } from '@mantine/core';
 import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
-import { useGetCataloguesQuery } from 'shared';
+import { useAppActions, useAppSelector, useGetCataloguesQuery } from 'shared';
 
 export const CategoryFilter: FC = () => {
   const [isOpened, setIsOpened] = useState(false);
 
+  const { setCategory } = useAppActions();
+  const { category } = useAppSelector((state) => state.stateReducer.filters);
+
   const { data: categories } = useGetCataloguesQuery({});
+
+  const handeCategory = (value: string) => {
+    setCategory(value);
+  };
 
   return (
     <>
       {categories && (
         <Select
-          label="Отрасль"
-          placeholder="Выберите отрасль"
-          rightSection={isOpened ? <IconChevronUp size="1rem" /> : <IconChevronDown size="1rem" />}
-          searchable
+          value={category}
+          data={categories.map((category) => ({ label: category.title, value: String(category.key) }))}
+          onChange={handeCategory}
           onDropdownOpen={() => setIsOpened(true)}
           onDropdownClose={() => setIsOpened(false)}
           rightSectionWidth={30}
-          styles={{ rightSection: { pointerEvents: 'none' } }}
-          data={categories.map((category) => category.title)}
+          label="Отрасль"
+          placeholder="Выберите отрасль"
+          searchable
+          rightSection={isOpened ? <IconChevronUp size="1rem" /> : <IconChevronDown size="1rem" />}
+          dropdownPosition="bottom"
+          styles={{
+            rightSection: { pointerEvents: 'none' },
+            item: { whiteSpace: 'normal' }
+          }}
         />
       )}
     </>

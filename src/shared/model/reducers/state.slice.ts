@@ -4,8 +4,8 @@ interface IState {
   search: string;
   filters: {
     category: string;
-    paymentFrom: string;
-    paymentTo: string;
+    paymentFrom?: number | '';
+    paymentTo?: number | '';
   };
   favorites: number[];
 }
@@ -42,11 +42,11 @@ export const stateSlice = createSlice({
       state.filters.category = action.payload;
     },
 
-    setPaymentTo(state, action: PayloadAction<string>) {
+    setPaymentTo(state, action: PayloadAction<'' | number>) {
       state.filters.paymentTo = action.payload;
     },
 
-    setPaymentFrom(state, action: PayloadAction<string>) {
+    setPaymentFrom(state, action: PayloadAction<'' | number>) {
       state.filters.paymentFrom = action.payload;
     },
 

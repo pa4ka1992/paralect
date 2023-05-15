@@ -19,7 +19,7 @@ export const isAuthorizationResponse = (response: unknown): response is Authoriz
 
 export const isCatalogues = (response: unknown): response is ICatalogue[] => {
   if (response instanceof Array) {
-    return response.every((catalogue) => catalogue instanceof Object && 'title' in catalogue);
+    return response.every((catalogue) => catalogue instanceof Object && 'title' in catalogue && 'key' in catalogue);
   }
 
   return false;
