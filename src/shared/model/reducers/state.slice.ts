@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { LOCAL_STORAGE_NAMES } from 'shared/constants';
 
 interface IState {
   search: string;
@@ -11,6 +12,8 @@ interface IState {
   favorites: number[];
 }
 
+const favoritesPreload = localStorage.getItem(LOCAL_STORAGE_NAMES.favorites);
+
 const initialState: IState = {
   search: '',
   skipQuery: false,
@@ -19,7 +22,7 @@ const initialState: IState = {
     paymentFrom: '',
     paymentTo: ''
   },
-  favorites: []
+  favorites: favoritesPreload ? JSON.parse(favoritesPreload) : []
 };
 
 export const stateSlice = createSlice({
@@ -29,10 +32,11 @@ export const stateSlice = createSlice({
     updateFavorites(state, action: PayloadAction<number>) {
       if (state.favorites.includes(action.payload)) {
         state.favorites = state.favorites.filter((vacancyId) => vacancyId !== action.payload);
-        return;
+      } else {
+        state.favorites.push(action.payload);
       }
 
-      state.favorites.push(action.payload);
+      localStorage.setItem(LOCAL_STORAGE_NAMES.favorites, JSON.stringify(state.favorites));
     },
 
     setSearch(state, action: PayloadAction<string>) {

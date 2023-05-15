@@ -1,18 +1,17 @@
-import { FC, Suspense, useContext, useEffect } from 'react';
+import { FC, Suspense, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { AppShell, Container } from '@mantine/core';
 import { Header } from 'widgets';
-import { StateContext, useGetAccessTokenQuery } from 'shared';
+import { useGetAccessTokenQuery, LOCAL_STORAGE_NAMES } from 'shared';
 
 export const Layout: FC = () => {
   const { data, isLoading, isSuccess } = useGetAccessTokenQuery({});
-  const { localStorage } = useContext(StateContext);
 
   useEffect(() => {
     if (isSuccess && data) {
-      localStorage.setItem('access_token', data.access_token);
+      localStorage.setItem(LOCAL_STORAGE_NAMES.access_token, data.access_token);
     }
-  }, [isSuccess, data, localStorage]);
+  }, [isSuccess, data]);
 
   return (
     <AppShell>
