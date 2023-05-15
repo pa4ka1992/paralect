@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react';
-import { Stack } from '@mantine/core';
+import { Container, Stack } from '@mantine/core';
 import { useParams } from 'react-router-dom';
 import { VacancyItem, VacancyViewDescription } from 'entities';
 import { useLazyGetVacancyQuery } from 'shared';
@@ -17,10 +17,12 @@ export const VacancyView: FC = () => {
   return (
     <>
       {vacancy && (
-        <Stack>
-          <VacancyItem vacancy={vacancy} />
-          <VacancyViewDescription vacancy={vacancy} />
-        </Stack>
+        <Container size="lg">
+          <Stack>
+            <VacancyItem vacancy={vacancy} />
+            <VacancyViewDescription vacancy={vacancy} />
+          </Stack>
+        </Container>
       )}
     </>
   );
