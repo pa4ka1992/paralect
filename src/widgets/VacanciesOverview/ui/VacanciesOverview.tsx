@@ -1,7 +1,7 @@
 import { Box } from '@mantine/core';
-import { FC, useMemo, useState } from 'react';
+import { FC, useState } from 'react';
 import { Pagination, VacancyList } from 'features';
-import { useAppSelector, useSearchVacanciesQuery } from 'shared';
+import { useAppSelector, usePaginationSlicer, useSearchVacanciesQuery } from 'shared';
 
 type Props = {
   perPage: number;
@@ -27,10 +27,7 @@ export const VacanciesOverview: FC<Props> = ({ perPage }) => {
     { skip: skipQuery }
   );
 
-  const vacanciesOnPage = useMemo(() => {
-    const endOffset = page - 1 + perPage;
-    return vacancies?.slice(page - 1, endOffset);
-  }, [perPage, vacancies, page]);
+  const { vacanciesOnPage } = usePaginationSlicer(perPage, page, vacancies);
 
   return (
     <>
