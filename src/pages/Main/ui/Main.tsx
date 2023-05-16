@@ -1,16 +1,16 @@
 import { FC } from 'react';
-import { Group, Stack } from '@mantine/core';
+import { Flex, Stack } from '@mantine/core';
 import { Searchbar } from 'features';
 import { Filters, VacanciesOverview } from 'widgets';
 
 export const Main: FC = () => {
   return (
-    <Group>
+    <Flex align="flex-start" wrap="nowrap" gap="xl">
       <Filters />
-      <Stack>
+      <Stack sx={{ flex: '1 1 auto' }}>
         <Searchbar />
         <VacanciesOverview perPage={4} />
       </Stack>
-    </Group>
+    </Flex>
   );
 };
