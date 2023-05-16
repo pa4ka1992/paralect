@@ -1,4 +1,5 @@
 export * from './LogoGroup';
+export * from './NavLink';
 
 export * from './ResetFilter';
 

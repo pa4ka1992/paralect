@@ -1,24 +1,29 @@
 import { FC } from 'react';
-import { Box, Text } from '@mantine/core';
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { Flex, Text, useMantineTheme } from '@mantine/core';
+import { ROUTES } from 'shared';
 import { Logo } from './assets';
 
 export const LogoGroup: FC = () => {
+  const navigate = useNavigate();
+  const theme = useMantineTheme();
+
   return (
-    <NavLink to={'/'}>
-      <Box
-        sx={(theme) => ({
-          display: 'flex',
-          alignItems: 'center',
-          gap: theme.spacing.sm,
-          height: '100%'
-        })}
+    <Flex align="center" gap="sm" onClick={() => navigate(ROUTES.main)} sx={{ cursor: 'pointer' }}>
+      <Logo />
+      <Text
+        size="lg"
+        fw={600}
+        ff="Poppins, sans-serif"
+        sx={{
+          transition: 'all 0.1s',
+          '&:hover': {
+            color: theme.colors.whites[6]
+          }
+        }}
       >
-        <Logo />
-        <Text size="lg" fw={600} ff="Poppins, sans-serif">
-          Jobored
-        </Text>
-      </Box>
-    </NavLink>
+        Jobored
+      </Text>
+    </Flex>
   );
 };

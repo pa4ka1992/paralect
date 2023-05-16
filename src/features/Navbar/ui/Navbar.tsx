@@ -1,15 +1,27 @@
-import { Group, NavLink } from '@mantine/core';
 import { FC } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Flex } from '@mantine/core';
+import { NavLink } from 'entities';
 import { ROUTES } from 'shared';
 
-export const Navbar: FC = () => {
-  const navigate = useNavigate();
+const NAVIGATION = [
+  {
+    id: 1,
+    route: ROUTES.main,
+    label: 'Поиск вакансий'
+  },
+  {
+    id: 2,
+    route: ROUTES.favorites,
+    label: 'Избранное'
+  }
+];
 
+export const Navbar: FC = () => {
   return (
-    <Group spacing={60} sx={{ flex: '1 1 100%', flexWrap: 'nowrap', justifyContent: 'center' }}>
-      <NavLink fw={500} label="Поиск вакансий" sx={{ width: 'auto' }} onClick={() => navigate(ROUTES.main)} />
-      <NavLink fw={500} label="Избранное" sx={{ width: 'auto' }} onClick={() => navigate(ROUTES.favorites)} />
-    </Group>
+    <Flex gap="60px" wrap="nowrap" align="center" justify="center" sx={{ flex: '1 1 100%' }}>
+      {NAVIGATION.map((link) => (
+        <NavLink key={link.id} route={link.route} label={link.label} />
+      ))}
+    </Flex>
   );
 };

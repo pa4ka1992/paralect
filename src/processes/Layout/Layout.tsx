@@ -14,8 +14,14 @@ export const Layout: FC = () => {
   }, [isSuccess, data]);
 
   return (
-    <AppShell>
-      <Header />
+    <AppShell
+      header={<Header />}
+      styles={{
+        main: {
+          paddingTop: '124px'
+        }
+      }}
+    >
       <Container size="xl">
         <Suspense fallback="loading...">{isLoading ? 'loading...' : <Outlet />}</Suspense>
       </Container>
