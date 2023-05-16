@@ -1,7 +1,7 @@
 import { Box } from '@mantine/core';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Pagination, VacancyList } from 'features';
-import { useAppSelector, usePaginationSlicer, useSearchVacanciesQuery } from 'shared';
+import { useAppActions, useAppSelector, usePaginationSlicer, useSearchVacanciesQuery } from 'shared';
 
 type Props = {
   perPage: number;
@@ -11,11 +11,17 @@ export const VacanciesOverview: FC<Props> = ({ perPage }) => {
   const [page, setPage] = useState(1);
 
   const { search, category, paymentTo, paymentFrom, skipQuery } = useAppSelector((state) => {
-    const { filters, search, skipQuery } = state.stateReducer;
+    const { filters, search, skipQuery } = state.filtersReducer;
     const { category, paymentTo, paymentFrom } = filters;
 
     return { search, skipQuery, category, paymentTo, paymentFrom };
   });
+  const { setSkipQuery } = useAppActions();
+
+  useEffect(() => {
+    setSkipQuery(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const { data: vacancies } = useSearchVacanciesQuery(
     {
