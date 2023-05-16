@@ -1,24 +1,23 @@
-import { Group, NavLink, Paper, Text, ActionIcon } from '@mantine/core';
-import { IconStar, IconStarFilled, IconMapPin } from '@tabler/icons-react';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { uid } from 'uid';
+import { Group, NavLink, Paper, Text, ActionIcon, useMantineTheme } from '@mantine/core';
+import { IconStar, IconStarFilled, IconMapPin } from '@tabler/icons-react';
 import { VacancyProps, useAppActions, useAppSelector } from 'shared';
 
 export const VacancyItem: FC<VacancyProps> = ({ vacancy }) => {
   const navigate = useNavigate();
+  const theme = useMantineTheme();
 
-  const { favorites } = useAppSelector((state) => state.stateReducer);
+  const { favorites } = useAppSelector((state) => state.favoritesReducer);
   const { updateFavorites } = useAppActions();
 
   const changeFavorites = (id: number) => {
     updateFavorites(id);
   };
 
-  const setFavoriteIcon = (vacancyId: number) => {
-    const isInFavorites = favorites.includes(vacancyId);
-
-    return isInFavorites ? <IconStarFilled size="1.125rem" /> : <IconStar size="1.125rem" />;
+  const isInFavorites = (vacancyId: number) => {
+    return favorites.includes(vacancyId);
   };
 
   return (
@@ -32,10 +31,10 @@ export const VacancyItem: FC<VacancyProps> = ({ vacancy }) => {
         <Text>{vacancy.type_of_work.title}</Text>
       </Group>
       <Text>
-        <IconMapPin size="1.125rem" /> {vacancy.town.title}
+        <IconMapPin color={theme.colors.whites[5]} size="20px" /> {vacancy.town.title}
       </Text>
-      <ActionIcon color="blue" onClick={() => changeFavorites(vacancy.id)}>
-        {setFavoriteIcon(vacancy.id)}
+      <ActionIcon c={isInFavorites(vacancy.id) ? 'blues.1' : 'whites.5'} onClick={() => changeFavorites(vacancy.id)}>
+        {isInFavorites(vacancy.id) ? <IconStarFilled size="22px" /> : <IconStar size="22px" />}
       </ActionIcon>
     </Paper>
   );

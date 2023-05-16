@@ -1,8 +1,9 @@
 import { PreloadedState, combineReducers, configureStore } from '@reduxjs/toolkit';
-import { stateReducer, superJobAPI } from 'shared';
+import { filtersReducer, favoritesReducer, superJobAPI } from 'shared';
 
 const rootReducer = combineReducers({
-  stateReducer,
+  filtersReducer,
+  favoritesReducer,
   [superJobAPI.reducerPath]: superJobAPI.reducer
 });
 

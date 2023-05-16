@@ -1,10 +1,10 @@
-import { ActionIcon, TextInput } from '@mantine/core';
-import { IconSearch, IconArrowRight } from '@tabler/icons-react';
+import { Button, TextInput } from '@mantine/core';
+import { IconSearch } from '@tabler/icons-react';
 import { FC, ChangeEvent } from 'react';
 import { useAppActions, useAppSelector } from 'shared';
 
 export const Searchbar: FC = () => {
-  const { search } = useAppSelector((state) => state.stateReducer);
+  const { search } = useAppSelector((state) => state.filtersReducer);
   const { setSkipQuery } = useAppActions();
   const { setSearch } = useAppActions();
 
@@ -18,19 +18,28 @@ export const Searchbar: FC = () => {
   };
 
   return (
-    <TextInput
-      value={search}
-      onChange={changeSearch}
-      icon={<IconSearch size="1.1rem" stroke={1.5} />}
-      radius="xl"
-      size="md"
-      rightSection={
-        <ActionIcon onClick={startSearch} size={32} radius="xl" variant="filled">
-          <IconArrowRight size="1.1rem" stroke={1.5} />
-        </ActionIcon>
-      }
-      placeholder="Search questions"
-      rightSectionWidth={42}
-    />
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        startSearch();
+      }}
+    >
+      <TextInput
+        value={search}
+        onChange={changeSearch}
+        icon={<IconSearch size="20px" stroke={2} />}
+        size="lg"
+        rightSection={
+          <Button type="submit" size="xs" onClick={startSearch}>
+            Поиск
+          </Button>
+        }
+        placeholder="Введите название вакансии"
+        rightSectionWidth={110}
+        styles={(theme) => ({
+          input: { fontSize: theme.fontSizes.xs }
+        })}
+      />
+    </form>
   );
 };

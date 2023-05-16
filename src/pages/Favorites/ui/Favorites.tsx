@@ -10,7 +10,7 @@ export const Favorites: FC = () => {
   const perPage = useRef(4);
   const navigate = useNavigate();
 
-  const { favorites } = useAppSelector((state) => state.stateReducer);
+  const { favorites } = useAppSelector((state) => state.favoritesReducer);
 
   // vacancies/?ids=ID[] query should reply with array of single vacancies,
   // but seems it doesn't work. So I'am using cash from main page, but I don't like that

@@ -2,52 +2,47 @@ import { NumberInput, Stack } from '@mantine/core';
 import { FC } from 'react';
 import { useAppActions, useAppSelector } from 'shared';
 
-type InputHadler = (paymentFromPayload: number | '') => void;
-
 export const PaymentFilter: FC = () => {
-  const { paymentFrom, paymentTo } = useAppSelector((state) => state.stateReducer.filters);
+  const { paymentFrom, paymentTo } = useAppSelector((state) => state.filtersReducer.filters);
   const { setPaymentFrom, setPaymentTo, setSkipQuery } = useAppActions();
 
-  const changePaymentFrom: InputHadler = (paymentFromPayload) => {
+  const changePayment = (payload: number | '', type: string) => {
     setSkipQuery(true);
-    setPaymentFrom(paymentFromPayload);
-
-    const isUpdateTo = paymentTo && typeof paymentFromPayload === 'number' && paymentFromPayload > paymentTo;
-
-    if (isUpdateTo) {
-      setPaymentTo(paymentFromPayload);
-    }
-  };
-
-  const changePaymentTo: InputHadler = (paymentToPayload) => {
-    setSkipQuery(true);
-    setPaymentTo(paymentToPayload);
-
-    const isUpdateFrom = paymentFrom && typeof paymentToPayload === 'number' && paymentToPayload < paymentFrom;
-
-    if (isUpdateFrom) {
-      setPaymentFrom(paymentToPayload);
-    }
+    type === 'to' ? setPaymentTo(payload) : setPaymentFrom(payload);
   };
 
   return (
-    <Stack>
+    <Stack spacing="8px">
       <NumberInput
         value={paymentFrom}
-        onChange={changePaymentFrom}
+        onChange={(payload) => changePayment(payload, 'to')}
         type="number"
         min={0}
         step={500}
         label="Оклад"
         placeholder="От"
+        styles={(theme) => ({
+          input: {
+            fontSize: theme.fontSizes.xs
+          },
+          label: {
+            marginBottom: '8px',
+            fontWeight: 700
+          }
+        })}
       />
       <NumberInput
         value={paymentTo}
-        onChange={changePaymentTo}
+        onChange={(payload) => changePayment(payload, 'from')}
         type="number"
         min={Number(paymentFrom)}
         step={500}
         placeholder="До"
+        styles={(theme) => ({
+          input: {
+            fontSize: theme.fontSizes.xs
+          }
+        })}
       />
     </Stack>
   );

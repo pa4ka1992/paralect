@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { LOCAL_STORAGE_NAMES } from 'shared/constants';
 
-interface IState {
+interface IFilters {
   search: string;
   skipQuery: boolean;
   filters: {
@@ -9,36 +8,22 @@ interface IState {
     paymentFrom?: number | '';
     paymentTo?: number | '';
   };
-  favorites: number[];
 }
 
-const favoritesPreload = localStorage.getItem(LOCAL_STORAGE_NAMES.favorites);
-
-const initialState: IState = {
+const initialState: IFilters = {
   search: '',
   skipQuery: false,
   filters: {
     category: '',
     paymentFrom: '',
     paymentTo: ''
-  },
-  favorites: favoritesPreload ? JSON.parse(favoritesPreload) : []
+  }
 };
 
-export const stateSlice = createSlice({
+const filtersSlice = createSlice({
   name: 'State',
   initialState,
   reducers: {
-    updateFavorites(state, action: PayloadAction<number>) {
-      if (state.favorites.includes(action.payload)) {
-        state.favorites = state.favorites.filter((vacancyId) => vacancyId !== action.payload);
-      } else {
-        state.favorites.push(action.payload);
-      }
-
-      localStorage.setItem(LOCAL_STORAGE_NAMES.favorites, JSON.stringify(state.favorites));
-    },
-
     setSearch(state, action: PayloadAction<string>) {
       state.search = action.payload;
     },
@@ -48,15 +33,28 @@ export const stateSlice = createSlice({
     },
 
     setPaymentTo(state, action: PayloadAction<'' | number>) {
-      state.filters.paymentTo = action.payload;
+      const { filters } = state;
+
+      filters.paymentTo = action.payload;
+
+      if (+filters.paymentTo > +(filters.paymentFrom || 0)) {
+        filters.paymentFrom = action.payload;
+      }
     },
 
     setPaymentFrom(state, action: PayloadAction<'' | number>) {
-      state.filters.paymentFrom = action.payload;
+      const { filters } = state;
+
+      filters.paymentFrom = action.payload;
+
+      if (+filters.paymentFrom < +(filters.paymentTo || 0)) {
+        filters.paymentTo = action.payload;
+      }
     },
 
     resetFilters(state) {
       state.filters = initialState.filters;
+      state.skipQuery = false;
     },
 
     setSkipQuery(state, action: PayloadAction<boolean>) {
@@ -65,6 +63,6 @@ export const stateSlice = createSlice({
   }
 });
 
-export const stateActions = stateSlice.actions;
+export const filtersActions = filtersSlice.actions;
 
-export const stateReducer = stateSlice.reducer;
+export const filtersReducer = filtersSlice.reducer;

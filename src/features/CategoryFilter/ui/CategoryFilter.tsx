@@ -7,7 +7,7 @@ export const CategoryFilter: FC = () => {
   const [isOpened, setIsOpened] = useState(false);
 
   const { setCategory, setSkipQuery } = useAppActions();
-  const { category } = useAppSelector((state) => state.stateReducer.filters);
+  const { category } = useAppSelector((state) => state.filtersReducer.filters);
 
   const { data: categories } = useGetCataloguesQuery({});
 
@@ -25,16 +25,26 @@ export const CategoryFilter: FC = () => {
           onChange={changeCategory}
           onDropdownOpen={() => setIsOpened(true)}
           onDropdownClose={() => setIsOpened(false)}
-          rightSectionWidth={30}
+          rightSectionWidth={46}
           label="Отрасль"
           placeholder="Выберите отрасль"
           searchable
-          rightSection={isOpened ? <IconChevronUp size="1rem" /> : <IconChevronDown size="1rem" />}
+          rightSection={isOpened ? <IconChevronUp size="20px" /> : <IconChevronDown size="20px" />}
           dropdownPosition="bottom"
-          styles={{
+          styles={(theme) => ({
+            input: { fontSize: theme.fontSizes.xs },
             rightSection: { pointerEvents: 'none' },
-            item: { whiteSpace: 'normal' }
-          }}
+            item: {
+              whiteSpace: 'normal',
+              '&:hover': {
+                backgroundColor: theme.colors.blues[5]
+              }
+            },
+            label: {
+              marginBottom: '8px',
+              fontWeight: 700
+            }
+          })}
         />
       )}
     </>

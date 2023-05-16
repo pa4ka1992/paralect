@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Stack, Group, Text, Button, Paper } from '@mantine/core';
+import { Stack, Group, Button, Paper, Title } from '@mantine/core';
 import { ResetFilter } from 'entities';
 import { CategoryFilter, PaymentFilter } from 'features';
 import { useAppActions } from 'shared';
@@ -12,10 +12,10 @@ export const Filters: FC = () => {
   };
 
   return (
-    <Paper>
-      <Stack>
-        <Group>
-          <Text>Фильтры</Text>
+    <Paper w="315px" sx={{ flex: '0 0 auto' }}>
+      <Stack spacing="md">
+        <Group mb="12px" noWrap align="center" position="apart">
+          <Title size="h3">Фильтры</Title>
           <ResetFilter />
         </Group>
 
