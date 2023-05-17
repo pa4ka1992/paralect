@@ -16,7 +16,7 @@ export const VacanciesOverview: FC<Props> = ({ vacancies }) => {
   return (
     <>
       {vacanciesOnPage && (
-        <Stack spacing="40px">
+        <Stack spacing="40px" sx={{ flex: '1 1 100%' }} h="100%">
           <VacancyList vacancies={vacanciesOnPage} />
           <Pagination controls={{ page, setPage, perPage: PER_PAGE, length: vacancies?.length }} />
         </Stack>

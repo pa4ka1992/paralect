@@ -18,11 +18,12 @@ export const Layout: FC = () => {
       header={<Header />}
       styles={{
         main: {
-          paddingTop: '124px'
+          paddingTop: '124px',
+          paddingBottom: '44px'
         }
       }}
     >
-      <Container size="xl">
+      <Container h="100%" size="xl">
         <Suspense fallback="loading...">{isLoading ? 'loading...' : <Outlet />}</Suspense>
       </Container>
     </AppShell>

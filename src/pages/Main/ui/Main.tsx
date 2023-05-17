@@ -25,9 +25,9 @@ export const Main: FC = () => {
   );
 
   return (
-    <Flex align="flex-start" wrap="nowrap" gap="xl">
+    <Flex align="flex-start" wrap="nowrap" gap="xl" h="100%">
       <Filters />
-      <Stack sx={{ flex: '1 1 auto' }}>
+      <Stack sx={{ flex: '1 1 auto' }} h="100%">
         <Searchbar />
         <VacanciesOverview vacancies={vacancies} />
       </Stack>

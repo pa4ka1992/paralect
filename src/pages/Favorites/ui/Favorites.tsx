@@ -1,12 +1,10 @@
 import { FC } from 'react';
-import { Button, Center, Container, Stack, Text } from '@mantine/core';
-import { useNavigate } from 'react-router-dom';
-import { ROUTES, useAppSelector, useSearchVacanciesQuery } from 'shared';
+import { Container } from '@mantine/core';
+import { useAppSelector, useSearchVacanciesQuery } from 'shared';
 import { VacanciesOverview } from 'widgets';
-import { FavoriteEmpty } from './assets';
+import { EmptyFavorites } from 'features';
 
 export const Favorites: FC = () => {
-  const navigate = useNavigate();
   const { favorites } = useAppSelector((state) => state.favoritesReducer);
 
   // vacancies/?ids=ID[] query should reply with array of single vacancies,
@@ -23,19 +21,11 @@ export const Favorites: FC = () => {
   );
 
   if (!filteredFavorites || !filteredFavorites.length) {
-    return (
-      <Center>
-        <Stack align="center">
-          <FavoriteEmpty />
-          <Text>Упс, здесь еще ничего нет!</Text>
-          <Button onClick={() => navigate(ROUTES.main)}>Поиск Вакансий</Button>
-        </Stack>
-      </Center>
-    );
+    return <EmptyFavorites />;
   }
 
   return (
-    <Container size="lg">
+    <Container size="lg" h="100%">
       <VacanciesOverview vacancies={filteredFavorites} />
     </Container>
   );
