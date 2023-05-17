@@ -3,15 +3,24 @@ import { Outlet } from 'react-router-dom';
 import { AppShell, Container, Loader } from '@mantine/core';
 import { Header } from 'widgets';
 import { useGetAccessTokenQuery, LOCAL_STORAGE_NAMES } from 'shared';
+import { ResponseError } from 'entities';
 
 export const Layout: FC = () => {
-  const { data, isLoading, isSuccess } = useGetAccessTokenQuery({});
+  const { data, isLoading, isSuccess, isError } = useGetAccessTokenQuery({});
 
   useEffect(() => {
     if (isSuccess && data) {
       localStorage.setItem(LOCAL_STORAGE_NAMES.access_token, data.access_token);
     }
   }, [isSuccess, data]);
+
+  if (isError) {
+    return (
+      <AppShell display="flex" sx={{ alignItems: 'center', justifyContent: 'center' }}>
+        <ResponseError codeStatus="401" message="Апишка рипнулась, расходимся" />
+      </AppShell>
+    );
+  }
 
   return (
     <AppShell
