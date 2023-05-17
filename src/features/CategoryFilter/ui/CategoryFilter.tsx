@@ -20,7 +20,7 @@ export const CategoryFilter: FC = () => {
 
   const chevronIcon = useMemo(() => {
     return isOpened ? (
-      <IconChevronUp size="20px" style={{ color: theme.colors.blues[1] }} />
+      <IconChevronUp size="20px" style={{ color: theme.colors.blues[1], cursor: 'pointer' }} />
     ) : (
       <IconChevronDown size="20px" style={{ color: theme.colors.whites[5] }} />
     );
@@ -52,7 +52,7 @@ export const CategoryFilter: FC = () => {
             },
             label: {
               marginBottom: '8px',
-              fontWeight: 700
+              fontWeight: theme.other.fontWeight.bold
             }
           })}
         />

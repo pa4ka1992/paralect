@@ -21,12 +21,12 @@ export const PaymentFilter: FC = () => {
         step={500}
         label="Оклад"
         placeholder="От"
-        styles={{
+        styles={(theme) => ({
           label: {
             marginBottom: '8px',
-            fontWeight: 700
+            fontWeight: theme.other.fontWeight.bold
           }
-        }}
+        })}
       />
       <NumberInput
         value={paymentTo}

@@ -13,7 +13,7 @@ export const LogoGroup: FC = () => {
       <Logo />
       <Text
         size="lg"
-        fw={600}
+        fw={theme.other.fontWeight.semibold}
         ff="Poppins, sans-serif"
         sx={{
           transition: 'all 0.1s',

@@ -1,11 +1,11 @@
 import { ThemeComponent } from '../types';
 
 export const NavLink: ThemeComponent = {
-  defaultProps: {
-    fw: 400,
+  defaultProps: (theme) => ({
+    fw: theme.other.fontWeight.regular,
     noWrap: true,
     w: 'auto'
-  },
+  }),
 
   styles: (theme) => ({
     root: {

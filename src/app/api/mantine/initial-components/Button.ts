@@ -3,7 +3,7 @@ import { ThemeComponent } from '../types';
 export const Button: ThemeComponent = {
   defaultProps: (theme) => ({
     fz: theme.fontSizes.xs,
-    fw: 500
+    fw: theme.other.fontWeight.medium
   }),
 
   sizes: {
