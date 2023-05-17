@@ -16,7 +16,7 @@ export const PaymentFilter: FC = () => {
       <NumberInput
         data-elem="salary-from-input"
         value={paymentFrom}
-        onChange={(payload) => changePayment(payload, 'to')}
+        onChange={(payload) => changePayment(payload, 'from')}
         type="number"
         min={0}
         step={500}
@@ -32,9 +32,9 @@ export const PaymentFilter: FC = () => {
       <NumberInput
         data-elem="salary-to-input"
         value={paymentTo}
-        onChange={(payload) => changePayment(payload, 'from')}
+        onChange={(payload) => changePayment(payload, 'to')}
         type="number"
-        min={Number(paymentFrom)}
+        min={0}
         step={500}
         placeholder="До"
       />

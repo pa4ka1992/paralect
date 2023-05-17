@@ -32,23 +32,23 @@ const filtersSlice = createSlice({
       state.filters.category = action.payload;
     },
 
-    setPaymentTo(state, action: PayloadAction<'' | number>) {
-      const { filters } = state;
-
-      filters.paymentTo = action.payload;
-
-      if (+filters.paymentTo > +(filters.paymentFrom || 0)) {
-        filters.paymentFrom = action.payload;
-      }
-    },
-
     setPaymentFrom(state, action: PayloadAction<'' | number>) {
       const { filters } = state;
 
       filters.paymentFrom = action.payload;
 
-      if (+filters.paymentFrom < +(filters.paymentTo || 0)) {
+      if (+filters.paymentFrom > +(filters.paymentTo || 0)) {
         filters.paymentTo = action.payload;
+      }
+    },
+
+    setPaymentTo(state, action: PayloadAction<'' | number>) {
+      const { filters } = state;
+
+      filters.paymentTo = action.payload;
+
+      if (+filters.paymentTo < +(filters.paymentFrom || 0)) {
+        filters.paymentFrom = 0;
       }
     },
 

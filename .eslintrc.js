@@ -83,7 +83,7 @@ module.exports = {
       }
     ],
     'no-restricted-imports': [
-      1,
+      2,
       {
         patterns: DENIED_PATH_GROUPS
       }
