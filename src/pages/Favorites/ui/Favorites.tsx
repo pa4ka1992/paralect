@@ -1,15 +1,12 @@
-import { FC, useRef, useState } from 'react';
-import { Button, Center, Stack, Text } from '@mantine/core';
+import { FC } from 'react';
+import { Button, Center, Container, Stack, Text } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
-import { Pagination, VacancyList } from 'features';
-import { ROUTES, useAppSelector, usePaginationSlicer, useSearchVacanciesQuery } from 'shared';
+import { ROUTES, useAppSelector, useSearchVacanciesQuery } from 'shared';
+import { VacanciesOverview } from 'widgets';
 import { FavoriteEmpty } from './assets';
 
 export const Favorites: FC = () => {
-  const [page, setPage] = useState(1);
-  const perPage = useRef(4);
   const navigate = useNavigate();
-
   const { favorites } = useAppSelector((state) => state.favoritesReducer);
 
   // vacancies/?ids=ID[] query should reply with array of single vacancies,
@@ -24,9 +21,8 @@ export const Favorites: FC = () => {
       }
     }
   );
-  const { vacanciesOnPage } = usePaginationSlicer(perPage.current, page, filteredFavorites);
 
-  if (!vacanciesOnPage || !vacanciesOnPage.length) {
+  if (!filteredFavorites || !filteredFavorites.length) {
     return (
       <Center>
         <Stack align="center">
@@ -39,9 +35,8 @@ export const Favorites: FC = () => {
   }
 
   return (
-    <Stack>
-      <VacancyList vacancies={vacanciesOnPage} />
-      <Pagination controls={{ page, setPage, perPage: perPage.current, length: filteredFavorites?.length }} />
-    </Stack>
+    <Container size="lg">
+      <VacanciesOverview vacancies={filteredFavorites} />
+    </Container>
   );
 };
