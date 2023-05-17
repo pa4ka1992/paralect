@@ -38,7 +38,7 @@ export const superJobAPI = createApi({
       { keyword: string; payment_from: string; payment_to: string; catalogues: string }
     >({
       query: ({ keyword, payment_from, payment_to, catalogues }) => ({
-        url: '/2.0/oauth2/vacancies/',
+        url: '/2.0/vacancies',
         params: {
           published: 1,
           keyword: keyword,
@@ -54,7 +54,7 @@ export const superJobAPI = createApi({
 
     getVacancy: builder.query<IVacancy | undefined, { id: string }>({
       query: ({ id }) => ({
-        url: `/2.0/vacancies/${id}/`
+        url: `/2.0/vacancies/${id}`
       }),
       transformResponse: (response: unknown) => {
         return isVacancy(response) ? response : undefined;
@@ -63,14 +63,32 @@ export const superJobAPI = createApi({
 
     getCatalogues: builder.query<ICatalogue[] | undefined, {}>({
       query: () => ({
-        url: '/2.0/catalogues/'
+        url: '/2.0/catalogues'
       }),
       transformResponse: (response: unknown) => {
         return isCatalogues(response) ? response : undefined;
+      }
+    }),
+
+    getFavorites: builder.query<IVacancy[] | undefined, { ids: number[] }>({
+      query: ({ ids }) => ({
+        url: '/2.0/vacancies',
+        params: {
+          published: 1,
+          ids: ids
+        }
+      }),
+      transformResponse: (response: { objects: unknown }) => {
+        return isVacancies(response.objects) ? response.objects : undefined;
       }
     })
   })
 });
 
-export const { useGetAccessTokenQuery, useGetCataloguesQuery, useLazyGetVacancyQuery, useSearchVacanciesQuery } =
-  superJobAPI;
+export const {
+  useGetAccessTokenQuery,
+  useGetCataloguesQuery,
+  useLazyGetVacancyQuery,
+  useSearchVacanciesQuery,
+  useGetFavoritesQuery
+} = superJobAPI;
