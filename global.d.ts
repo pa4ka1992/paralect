@@ -11,3 +11,17 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+export * from '@mantine/core';
+
+declare module '@mantine/core' {
+  export interface MantineThemeOther {
+    fontWeight: {
+      light: number;
+      regular: number;
+      medium: number;
+      semibold: number;
+      bold: number;
+    };
+  }
+}

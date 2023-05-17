@@ -18,7 +18,7 @@ export const theme: MantineThemeOverride = {
     lg: '24px',
     md: '20px',
     sm: '16px',
-    xs: '13px'
+    xs: '12px'
   },
   radius: {
     xl: '14px',
@@ -33,7 +33,7 @@ export const theme: MantineThemeOverride = {
       h1: { fontSize: '28px', fontWeight: 700, lineHeight: '34px' },
       h2: { fontSize: '24px', fontWeight: 600, lineHeight: '36px' },
       h3: { fontSize: '20px', fontWeight: 700, lineHeight: '20px' },
-      h4: { fontSize: '16px', fontWeight: 600, lineHeight: '20px' }
+      h4: { fontSize: '16px', fontWeight: 400, lineHeight: '20px' }
     }
   },
   colors: {
@@ -49,5 +49,14 @@ export const theme: MantineThemeOverride = {
     NavLink,
     NumberInput
   },
-  black: '#232134'
+  black: '#232134',
+  other: {
+    fontWeight: {
+      light: 300,
+      regular: 400,
+      medium: 500,
+      semibold: 600,
+      bold: 700
+    }
+  }
 };
