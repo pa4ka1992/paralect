@@ -27,37 +27,33 @@ export const CategoryFilter: FC = () => {
   }, [isOpened, theme]);
 
   return (
-    <>
-      {categories && (
-        <Select
-          data-elem="industry-select"
-          value={category}
-          data={categories.map((category) => ({ label: category.title, value: String(category.key) }))}
-          onChange={changeCategory}
-          onDropdownOpen={() => setIsOpened(true)}
-          onDropdownClose={() => setIsOpened(false)}
-          rightSectionWidth={46}
-          label="Отрасль"
-          placeholder="Выберите отрасль"
-          searchable
-          rightSection={chevronIcon}
-          dropdownPosition="bottom"
-          styles={(theme) => ({
-            input: { fontSize: theme.fontSizes.xs },
-            rightSection: { pointerEvents: 'none' },
-            item: {
-              whiteSpace: 'normal',
-              '&:hover': {
-                backgroundColor: theme.colors.blues[5]
-              }
-            },
-            label: {
-              marginBottom: '8px',
-              fontWeight: theme.other.fontWeight.bold
-            }
-          })}
-        />
-      )}
-    </>
+    <Select
+      data-elem="industry-select"
+      value={category}
+      data={categories ? categories.map((category) => ({ label: category.title, value: String(category.key) })) : []}
+      onChange={changeCategory}
+      onDropdownOpen={() => setIsOpened(true)}
+      onDropdownClose={() => setIsOpened(false)}
+      rightSectionWidth={46}
+      label="Отрасль"
+      placeholder="Выберите отрасль"
+      searchable
+      rightSection={chevronIcon}
+      dropdownPosition="bottom"
+      styles={(theme) => ({
+        input: { fontSize: theme.fontSizes.xs },
+        rightSection: { pointerEvents: 'none' },
+        item: {
+          whiteSpace: 'normal',
+          '&:hover': {
+            backgroundColor: theme.colors.blues[5]
+          }
+        },
+        label: {
+          marginBottom: '8px',
+          fontWeight: theme.other.fontWeight.bold
+        }
+      })}
+    />
   );
 };

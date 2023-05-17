@@ -5,13 +5,15 @@ import { IVacancy } from 'shared';
 import { VacancyItem } from 'entities';
 
 type Props = {
-  vacancies: IVacancy[];
+  vacancies?: IVacancy[];
 };
 
 export const VacancyList: FC<Props> = ({ vacancies }) => {
   return (
     <Stack sx={{ flex: '1 1 100%' }}>
-      {vacancies && vacancies.map((vacancy) => <VacancyItem key={uid()} vacancy={vacancy} />)}
+      {vacancies?.map((vacancy) => (
+        <VacancyItem key={uid()} vacancy={vacancy} />
+      ))}
     </Stack>
   );
 };

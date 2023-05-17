@@ -1,8 +1,7 @@
 import { FC } from 'react';
-import { Container } from '@mantine/core';
+import { Container, Loader } from '@mantine/core';
 import { useAppSelector, useSearchVacanciesQuery } from 'shared';
 import { VacanciesOverview } from 'widgets';
-import { EmptyFavorites } from 'features';
 
 export const Favorites: FC = () => {
   const { favorites } = useAppSelector((state) => state.favoritesReducer);
@@ -10,23 +9,21 @@ export const Favorites: FC = () => {
   // vacancies/?ids=ID[] query should reply with array of single vacancies,
   // but seems it doesn't work. So I'am using cash from main page, but I don't like that
 
-  const { filteredFavorites } = useSearchVacanciesQuery(
+  const { filteredFavorites, isFetching } = useSearchVacanciesQuery(
     { keyword: '', catalogues: '', payment_to: '', payment_from: '' },
     {
       skip: !favorites.length,
-      selectFromResult: ({ data }) => {
-        return { filteredFavorites: data?.filter((vacancy) => favorites.includes(vacancy.id)) };
+      selectFromResult: ({ data, isFetching, isLoading, isError }) => {
+        const filteredFavorites = data?.filter((vacancy) => favorites.includes(vacancy.id));
+
+        return { filteredFavorites, isFetching, isLoading, isError };
       }
     }
   );
 
-  if (!filteredFavorites || !filteredFavorites.length) {
-    return <EmptyFavorites />;
-  }
-
   return (
-    <Container size="lg" h="100%">
-      <VacanciesOverview vacancies={filteredFavorites} />
+    <Container size="lg" h="100%" pos="relative">
+      {isFetching ? <Loader /> : <VacanciesOverview vacancies={filteredFavorites} isFetching={isFetching} />}
     </Container>
   );
 };

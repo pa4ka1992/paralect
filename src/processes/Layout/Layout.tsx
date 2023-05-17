@@ -1,6 +1,6 @@
 import { FC, Suspense, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import { AppShell, Container } from '@mantine/core';
+import { AppShell, Container, Loader } from '@mantine/core';
 import { Header } from 'widgets';
 import { useGetAccessTokenQuery, LOCAL_STORAGE_NAMES } from 'shared';
 
@@ -23,8 +23,8 @@ export const Layout: FC = () => {
         }
       }}
     >
-      <Container h="100%" size="xl">
-        <Suspense fallback="loading...">{isLoading ? 'loading...' : <Outlet />}</Suspense>
+      <Container h="100%" size="xl" pos="relative">
+        <Suspense fallback={<Loader />}>{isLoading ? <Loader /> : <Outlet />}</Suspense>
       </Container>
     </AppShell>
   );
