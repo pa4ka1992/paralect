@@ -3,3 +3,4 @@ export * from './Paper';
 export * from './Button';
 export * from './ActionIcon';
 export * from './NavLink';
+export * from './NumberInput';

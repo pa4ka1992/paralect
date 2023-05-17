@@ -35,7 +35,7 @@ export const Searchbar: FC = () => {
           </Button>
         }
         placeholder="Введите название вакансии"
-        rightSectionWidth={110}
+        rightSectionWidth={105}
         styles={(theme) => ({
           input: { fontSize: theme.fontSizes.xs }
         })}

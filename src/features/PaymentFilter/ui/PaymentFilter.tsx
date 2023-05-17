@@ -21,15 +21,12 @@ export const PaymentFilter: FC = () => {
         step={500}
         label="Оклад"
         placeholder="От"
-        styles={(theme) => ({
-          input: {
-            fontSize: theme.fontSizes.xs
-          },
+        styles={{
           label: {
             marginBottom: '8px',
             fontWeight: 700
           }
-        })}
+        }}
       />
       <NumberInput
         value={paymentTo}
@@ -38,11 +35,6 @@ export const PaymentFilter: FC = () => {
         min={Number(paymentFrom)}
         step={500}
         placeholder="До"
-        styles={(theme) => ({
-          input: {
-            fontSize: theme.fontSizes.xs
-          }
-        })}
       />
     </Stack>
   );

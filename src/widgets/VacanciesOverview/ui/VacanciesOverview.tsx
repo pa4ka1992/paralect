@@ -1,4 +1,4 @@
-import { Box } from '@mantine/core';
+import { Stack } from '@mantine/core';
 import { FC, useEffect, useState } from 'react';
 import { Pagination, VacancyList } from 'features';
 import { useAppActions, useAppSelector, usePaginationSlicer, useSearchVacanciesQuery } from 'shared';
@@ -38,10 +38,10 @@ export const VacanciesOverview: FC<Props> = ({ perPage }) => {
   return (
     <>
       {vacanciesOnPage && (
-        <Box>
+        <Stack spacing="40px">
           <VacancyList vacancies={vacanciesOnPage} />
           <Pagination controls={{ page, setPage, perPage, length: vacancies?.length }} />
-        </Box>
+        </Stack>
       )}
     </>
   );

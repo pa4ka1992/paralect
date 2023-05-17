@@ -1,10 +1,12 @@
-import { FC, useState } from 'react';
-import { Select } from '@mantine/core';
+import { FC, useMemo, useState } from 'react';
+import { Select, useMantineTheme } from '@mantine/core';
 import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
 import { useAppActions, useAppSelector, useGetCataloguesQuery } from 'shared';
 
 export const CategoryFilter: FC = () => {
   const [isOpened, setIsOpened] = useState(false);
+
+  const theme = useMantineTheme();
 
   const { setCategory, setSkipQuery } = useAppActions();
   const { category } = useAppSelector((state) => state.filtersReducer.filters);
@@ -15,6 +17,14 @@ export const CategoryFilter: FC = () => {
     setSkipQuery(true);
     setCategory(value);
   };
+
+  const chevronIcon = useMemo(() => {
+    return isOpened ? (
+      <IconChevronUp size="20px" style={{ color: theme.colors.blues[1] }} />
+    ) : (
+      <IconChevronDown size="20px" style={{ color: theme.colors.whites[5] }} />
+    );
+  }, [isOpened, theme]);
 
   return (
     <>
@@ -29,7 +39,7 @@ export const CategoryFilter: FC = () => {
           label="Отрасль"
           placeholder="Выберите отрасль"
           searchable
-          rightSection={isOpened ? <IconChevronUp size="20px" /> : <IconChevronDown size="20px" />}
+          rightSection={chevronIcon}
           dropdownPosition="bottom"
           styles={(theme) => ({
             input: { fontSize: theme.fontSizes.xs },

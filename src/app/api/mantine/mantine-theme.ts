@@ -1,5 +1,5 @@
 import { MantineThemeOverride } from '@mantine/core';
-import { AppShell, Button, Paper, ActionIcon, NavLink } from './initial-components';
+import { AppShell, Button, Paper, ActionIcon, NavLink, NumberInput } from './initial-components';
 
 export const theme: MantineThemeOverride = {
   fontFamily: 'Inter, sans-serif',
@@ -37,7 +37,7 @@ export const theme: MantineThemeOverride = {
     }
   },
   colors: {
-    whites: ['#FFFFFF', '#F7F7F8', '#F5F5F6', '#EAEBED', '#D5D6DC', '#ACADB9', '#7B7C88', '#232134'],
+    whites: ['#FFFFFF', '#F7F7F8', '#F5F5F6', '#EAEBED', '#D5D6DC', '#ACADB9', '#7B7C88'],
     blues: ['#3B7CD3', '#5E96FC', '#92C1FF', '#B7D6FF', '#C9E0FF', '#DEECFF']
   },
   primaryShade: { light: 1 },
@@ -46,6 +46,8 @@ export const theme: MantineThemeOverride = {
     Paper,
     Button,
     ActionIcon,
-    NavLink
-  }
+    NavLink,
+    NumberInput
+  },
+  black: '#232134'
 };

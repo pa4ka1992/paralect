@@ -13,7 +13,7 @@ export const Filters: FC = () => {
 
   return (
     <Paper w="315px" sx={{ flex: '0 0 auto' }}>
-      <Stack spacing="md">
+      <Stack spacing="md" m="1px">
         <Group mb="12px" noWrap align="center" position="apart">
           <Title size="h3">Фильтры</Title>
           <ResetFilter />
