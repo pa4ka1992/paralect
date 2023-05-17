@@ -33,7 +33,11 @@ export const VacancyTitle: FC<Props> = ({ id, profession }) => {
         {profession}
       </Title>
 
-      <ActionIcon c={isInFavorites(id) ? 'blues.1' : 'whites.5'} onClick={() => changeFavorites(id)}>
+      <ActionIcon
+        data-elem={`vacancy-${id}-shortlist-button`}
+        c={isInFavorites(id) ? 'blues.1' : 'whites.5'}
+        onClick={() => changeFavorites(id)}
+      >
         {isInFavorites(id) ? <IconStarFilled size="22px" /> : <IconStar size="22px" stroke="1.5" />}
       </ActionIcon>
     </Group>

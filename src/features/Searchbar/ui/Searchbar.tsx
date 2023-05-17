@@ -25,12 +25,13 @@ export const Searchbar: FC = () => {
       }}
     >
       <TextInput
+        data-elem="search-input"
         value={search}
         onChange={changeSearch}
         icon={<IconSearch size="20px" stroke={2} />}
         size="lg"
         rightSection={
-          <Button type="submit" size="xs" onClick={startSearch}>
+          <Button data-elem="search-button" type="submit" size="xs" onClick={startSearch}>
             Поиск
           </Button>
         }

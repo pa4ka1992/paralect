@@ -30,6 +30,7 @@ export const CategoryFilter: FC = () => {
     <>
       {categories && (
         <Select
+          data-elem="industry-select"
           value={category}
           data={categories.map((category) => ({ label: category.title, value: String(category.key) }))}
           onChange={changeCategory}

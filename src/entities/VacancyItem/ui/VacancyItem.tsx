@@ -10,7 +10,7 @@ export const VacancyItem: FC<VacancyProps> = ({ vacancy }) => {
   const theme = useMantineTheme();
 
   return (
-    <Paper p="lg">
+    <Paper p="lg" data-elem={`vacancy-${id}`}>
       <Stack spacing="xs">
         <VacancyTitle id={id} profession={profession} />
 

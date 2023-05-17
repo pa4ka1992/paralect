@@ -23,7 +23,9 @@ export const Filters: FC = () => {
 
         <PaymentFilter />
 
-        <Button onClick={applyFilters}>Применить</Button>
+        <Button data-elem="search-button" onClick={applyFilters}>
+          Применить
+        </Button>
       </Stack>
     </Paper>
   );
