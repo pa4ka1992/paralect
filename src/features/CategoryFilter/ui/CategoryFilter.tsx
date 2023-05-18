@@ -7,7 +7,7 @@ export const CategoryFilter: FC = () => {
   const [isOpened, setIsOpened] = useState(false);
   const theme = useMantineTheme();
 
-  const { catalogues } = useAppSelector((state) => state.filtersReducer.filters);
+  const { catalogues } = useAppSelector((state) => state.filtersReducer.filtersState);
   const { setCatalogues } = useAppActions();
 
   const { data: categories, isFetching } = useGetCataloguesQuery(null);

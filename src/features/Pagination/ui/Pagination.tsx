@@ -1,10 +1,11 @@
-import { Dispatch, FC, SetStateAction, useMemo } from 'react';
+import { FC, useMemo } from 'react';
+import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { Box, Pagination as MantinePagination } from '@mantine/core';
 import { TOTAL_PAGES, VACANCIES_PER_PAGE } from 'shared';
 
 type Props = {
   page: number;
-  setPage: Dispatch<SetStateAction<number>>;
+  setPage: ActionCreatorWithPayload<number, 'filters/setPage'>;
   searchTotal?: number;
 };
 

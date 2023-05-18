@@ -37,16 +37,13 @@ export const superJobAPI = createApi({
     }),
 
     searchVacancies: builder.query<ISearch | undefined, RequestParams>({
-      query: ({ keyword, payment_from, payment_to, catalogues, page }) => ({
+      query: ({ page, ...rest }) => ({
         url: '/2.0/vacancies',
         params: {
           published: PUBLISHED,
           count: VACANCIES_PER_PAGE,
-          page,
-          keyword,
-          payment_from,
-          payment_to,
-          catalogues
+          page: page - 1,
+          ...rest
         }
       }),
       transformResponse: (response: unknown) => {

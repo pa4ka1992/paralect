@@ -1,5 +1,6 @@
+import { FC } from 'react';
+import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { Stack } from '@mantine/core';
-import { Dispatch, FC, SetStateAction } from 'react';
 import { EmptyList, Pagination, VacancyList } from 'features';
 import { ISearch } from 'shared';
 
@@ -7,7 +8,7 @@ type Props = {
   vacancies?: ISearch;
   isFetching: boolean;
   page: number;
-  setPage: Dispatch<SetStateAction<number>>;
+  setPage: ActionCreatorWithPayload<number, 'filters/setPage'>;
 };
 
 export const VacanciesOverview: FC<Props> = ({ vacancies, isFetching, page, setPage }) => {

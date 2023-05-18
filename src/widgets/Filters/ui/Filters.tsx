@@ -2,10 +2,9 @@ import { FC } from 'react';
 import { Stack, Group, Button, Paper, Title } from '@mantine/core';
 import { ResetFilter } from 'entities';
 import { CategoryFilter, PaymentFilter } from 'features';
-import { useAppActions, useAppSelector } from 'shared';
+import { useAppActions } from 'shared';
 
 export const Filters: FC<{ isFetching: boolean }> = ({ isFetching }) => {
-  const { payment_from, payment_to, catalogues } = useAppSelector((state) => state.filtersReducer.filters);
   const { setRequestParams } = useAppActions();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -14,7 +13,7 @@ export const Filters: FC<{ isFetching: boolean }> = ({ isFetching }) => {
       return;
     }
 
-    setRequestParams({ payment_from, payment_to, catalogues });
+    setRequestParams();
   };
 
   return (

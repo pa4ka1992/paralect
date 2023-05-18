@@ -1,15 +1,15 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { Flex, Loader, Stack } from '@mantine/core';
 import { Searchbar } from 'features';
 import { Filters, VacanciesOverview } from 'widgets';
-import { useAppSelector, useSearchVacanciesQuery } from 'shared';
+import { useAppActions, useAppSelector, useSearchVacanciesQuery } from 'shared';
 import { ResponseError } from 'entities';
 
 export const Main: FC = () => {
-  const [page, setPage] = useState(1);
   const { requestParams } = useAppSelector((state) => state.filtersReducer);
+  const { setPage } = useAppActions();
 
-  const { data: searchResult, isFetching, isError } = useSearchVacanciesQuery({ ...requestParams, page });
+  const { data: searchResult, isFetching, isError } = useSearchVacanciesQuery(requestParams);
 
   if (isError) {
     return <ResponseError codeStatus="500" message="Я не знаю, что-то сломалось" />;
@@ -23,7 +23,12 @@ export const Main: FC = () => {
         {isFetching ? (
           <Loader />
         ) : (
-          <VacanciesOverview vacancies={searchResult} isFetching={isFetching} page={page} setPage={setPage} />
+          <VacanciesOverview
+            vacancies={searchResult}
+            isFetching={isFetching}
+            page={requestParams.page}
+            setPage={setPage}
+          />
         )}
       </Stack>
     </Flex>

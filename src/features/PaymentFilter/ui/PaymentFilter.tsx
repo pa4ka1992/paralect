@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { useAppActions, useAppSelector } from 'shared';
 
 export const PaymentFilter: FC<{ isFetching: boolean }> = ({ isFetching }) => {
-  const { payment_from, payment_to } = useAppSelector((state) => state.filtersReducer.filters);
+  const { payment_from, payment_to } = useAppSelector((state) => state.filtersReducer.filtersState);
 
   const { setPaymentTo, setPaymentFrom } = useAppActions();
 

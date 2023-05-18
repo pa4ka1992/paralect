@@ -7,13 +7,13 @@ export type Authorization = {
   reg_user_resumes_count: number;
 };
 
-export type RequestParams = Partial<{
-  keyword: string;
-  payment_from: number | '';
-  payment_to: number | '';
-  catalogues: string;
+export type RequestParams = {
+  keyword?: string;
+  payment_from?: number | '';
+  payment_to?: number | '';
+  catalogues?: string;
   page: number;
-}>;
+};
 
 export interface ISearch {
   objects: IVacancy[];

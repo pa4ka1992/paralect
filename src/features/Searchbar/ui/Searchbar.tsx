@@ -4,11 +4,11 @@ import { FC, ChangeEvent } from 'react';
 import { useAppActions, useAppSelector } from 'shared';
 
 export const Searchbar: FC<{ isFetching: boolean }> = ({ isFetching }) => {
-  const { search } = useAppSelector((state) => state.filtersReducer);
-  const { setRequestParams, setSearch } = useAppActions();
+  const { keyword } = useAppSelector((state) => state.filtersReducer.filtersState);
+  const { setRequestParams, setKeyword } = useAppActions();
 
   const changeSearch = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.currentTarget.value);
+    setKeyword(event.currentTarget.value);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -16,7 +16,7 @@ export const Searchbar: FC<{ isFetching: boolean }> = ({ isFetching }) => {
     if (isFetching) {
       return;
     }
-    setRequestParams({ keyword: search });
+    setRequestParams();
   };
 
   return (
@@ -24,7 +24,7 @@ export const Searchbar: FC<{ isFetching: boolean }> = ({ isFetching }) => {
       <TextInput
         data-elem="search-input"
         disabled={!!isFetching}
-        value={search}
+        value={keyword}
         onChange={changeSearch}
         icon={<IconSearch size="20px" stroke={2} />}
         size="lg"
