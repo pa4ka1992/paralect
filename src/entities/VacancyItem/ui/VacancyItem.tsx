@@ -1,11 +1,15 @@
 import { FC } from 'react';
 import { Paper, useMantineTheme, Stack, Group, Title } from '@mantine/core';
 import { IconMapPin } from '@tabler/icons-react';
-import { VacancyProps } from 'shared';
+import { IVacancy } from 'shared';
 import { VacancyTitle } from './VacancyTitle';
 import { VacancyShortInfo } from './VacancyShortInfo';
 
-export const VacancyItem: FC<VacancyProps> = ({ vacancy }) => {
+type Props = {
+  vacancy: IVacancy;
+};
+
+export const VacancyItem: FC<Props> = ({ vacancy }) => {
   const { id, profession, town } = vacancy;
   const theme = useMantineTheme();
 

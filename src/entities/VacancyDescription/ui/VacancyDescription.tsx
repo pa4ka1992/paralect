@@ -1,8 +1,12 @@
 import { Paper, Text } from '@mantine/core';
 import { FC } from 'react';
-import { VacancyProps } from 'shared';
+import { IVacancy } from 'shared';
 
-export const VacancyViewDescription: FC<VacancyProps> = ({ vacancy }) => {
+type Props = {
+  vacancy: IVacancy;
+};
+
+export const VacancyViewDescription: FC<Props> = ({ vacancy }) => {
   return (
     <Paper>
       <Text
