@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Flex, Loader, Stack } from '@mantine/core';
 import { Searchbar } from 'features';
 import { Filters, VacanciesOverview } from 'widgets';
-import { useAppActions, useAppSelector, useSearchVacanciesQuery } from 'shared';
+import { RESPONSE_STATUS, STATUS_MESSAGE, useAppActions, useAppSelector, useSearchVacanciesQuery } from 'shared';
 import { ResponseError } from 'entities';
 
 export const Main: FC = () => {
@@ -12,7 +12,7 @@ export const Main: FC = () => {
   const { data: searchResult, isFetching, isError } = useSearchVacanciesQuery(requestParams);
 
   if (isError) {
-    return <ResponseError codeStatus="500" message="Я не знаю, что-то сломалось" />;
+    return <ResponseError codeStatus={RESPONSE_STATUS.serverError} message={STATUS_MESSAGE.serverError} />;
   }
 
   return (

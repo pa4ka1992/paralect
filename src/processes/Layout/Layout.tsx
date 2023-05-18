@@ -2,7 +2,7 @@ import { FC, Suspense, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { AppShell, Container, Loader } from '@mantine/core';
 import { Header } from 'widgets';
-import { useGetAccessTokenQuery, LOCAL_STORAGE_NAMES } from 'shared';
+import { useGetAccessTokenQuery, LOCAL_STORAGE_NAMES, RESPONSE_STATUS, STATUS_MESSAGE } from 'shared';
 import { ResponseError } from 'entities';
 
 export const Layout: FC = () => {
@@ -17,7 +17,7 @@ export const Layout: FC = () => {
   if (isError) {
     return (
       <AppShell display="flex" sx={{ alignItems: 'center', justifyContent: 'center' }}>
-        <ResponseError codeStatus="401" message="Апишка рипнулась, расходимся" />
+        <ResponseError codeStatus={RESPONSE_STATUS.unauthorized} message={STATUS_MESSAGE.unauthorized} />
       </AppShell>
     );
   }

@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { ResponseError } from 'entities';
+import { RESPONSE_STATUS, STATUS_MESSAGE } from 'shared';
 
 export const NotFound: FC = () => {
-  return <ResponseError codeStatus="404" message="Страница не найдена" />;
+  return <ResponseError codeStatus={RESPONSE_STATUS.notFound} message={STATUS_MESSAGE.notFound} />;
 };

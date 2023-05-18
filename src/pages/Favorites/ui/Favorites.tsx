@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 import { Container, Loader } from '@mantine/core';
-import { useAppSelector, useGetFavoritesQuery } from 'shared';
+import { RESPONSE_STATUS, STATUS_MESSAGE, useAppSelector, useGetFavoritesQuery } from 'shared';
 import { VacanciesOverview } from 'widgets';
 import { ResponseError } from 'entities';
 import { EmptyList } from 'features';
@@ -13,10 +13,10 @@ export const Favorites: FC = () => {
     data: favoritesResult,
     isError,
     isFetching
-  } = useGetFavoritesQuery({ ids: favorites, page: page }, { skip: !favorites.length });
+  } = useGetFavoritesQuery({ ids: favorites, page }, { skip: !favorites.length });
 
   if (isError) {
-    return <ResponseError codeStatus="500" message="Я не знаю, что-то сломалось" />;
+    return <ResponseError codeStatus={RESPONSE_STATUS.serverError} message={STATUS_MESSAGE.serverError} />;
   }
 
   if (!favorites.length) {

@@ -2,7 +2,7 @@ import { FC, useEffect } from 'react';
 import { Container, Loader, Stack } from '@mantine/core';
 import { useParams } from 'react-router-dom';
 import { ResponseError, VacancyItem, VacancyViewDescription } from 'entities';
-import { useLazyGetVacancyQuery } from 'shared';
+import { RESPONSE_STATUS, STATUS_MESSAGE, useLazyGetVacancyQuery } from 'shared';
 
 export const VacancyView: FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -19,7 +19,7 @@ export const VacancyView: FC = () => {
   }
 
   if (isError) {
-    return <ResponseError codeStatus="500" message="Я не знаю, что-то сломалось" />;
+    return <ResponseError codeStatus={RESPONSE_STATUS.serverError} message={STATUS_MESSAGE.serverError} />;
   }
 
   if (!vacancy) {

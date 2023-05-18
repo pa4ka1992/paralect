@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Stack, Title } from '@mantine/core';
 
 type Props = {
-  codeStatus: string;
+  codeStatus: number;
   message: string;
 };
 
