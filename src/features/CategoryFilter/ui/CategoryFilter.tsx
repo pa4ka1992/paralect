@@ -5,17 +5,15 @@ import { useAppActions, useAppSelector, useGetCataloguesQuery } from 'shared';
 
 export const CategoryFilter: FC = () => {
   const [isOpened, setIsOpened] = useState(false);
-
   const theme = useMantineTheme();
 
-  const { setCategory, setSkipQuery } = useAppActions();
-  const { category } = useAppSelector((state) => state.filtersReducer.filters);
+  const { catalogues } = useAppSelector((state) => state.filtersReducer.filters);
+  const { setCatalogues } = useAppActions();
 
-  const { data: categories } = useGetCataloguesQuery({});
+  const { data: categories, isFetching } = useGetCataloguesQuery(null);
 
   const changeCategory = (value: string) => {
-    setSkipQuery(true);
-    setCategory(value);
+    setCatalogues(value);
   };
 
   const chevronIcon = useMemo(() => {
@@ -29,7 +27,8 @@ export const CategoryFilter: FC = () => {
   return (
     <Select
       data-elem="industry-select"
-      value={category}
+      disabled={!!isFetching}
+      value={catalogues}
       data={categories ? categories.map((category) => ({ label: category.title, value: String(category.key) })) : []}
       onChange={changeCategory}
       onDropdownOpen={() => setIsOpened(true)}
@@ -40,20 +39,6 @@ export const CategoryFilter: FC = () => {
       searchable
       rightSection={chevronIcon}
       dropdownPosition="bottom"
-      styles={(theme) => ({
-        input: { fontSize: theme.fontSizes.xs },
-        rightSection: { pointerEvents: 'none' },
-        item: {
-          whiteSpace: 'normal',
-          '&:hover': {
-            backgroundColor: theme.colors.blues[5]
-          }
-        },
-        label: {
-          marginBottom: '8px',
-          fontWeight: theme.other.fontWeight.bold
-        }
-      })}
     />
   );
 };

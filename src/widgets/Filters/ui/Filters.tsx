@@ -2,13 +2,19 @@ import { FC } from 'react';
 import { Stack, Group, Button, Paper, Title } from '@mantine/core';
 import { ResetFilter } from 'entities';
 import { CategoryFilter, PaymentFilter } from 'features';
-import { useAppActions } from 'shared';
+import { useAppActions, useAppSelector } from 'shared';
 
-export const Filters: FC = () => {
-  const { setSkipQuery } = useAppActions();
+export const Filters: FC<{ isFetching: boolean }> = ({ isFetching }) => {
+  const { payment_from, payment_to, catalogues } = useAppSelector((state) => state.filtersReducer.filters);
+  const { setRequestParams } = useAppActions();
 
-  const applyFilters = () => {
-    setSkipQuery(false);
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (isFetching) {
+      return;
+    }
+
+    setRequestParams({ payment_from, payment_to, catalogues });
   };
 
   return (
@@ -19,13 +25,17 @@ export const Filters: FC = () => {
           <ResetFilter />
         </Group>
 
-        <CategoryFilter />
+        <form onSubmit={handleSubmit}>
+          <Stack spacing="md">
+            <CategoryFilter />
 
-        <PaymentFilter />
+            <PaymentFilter isFetching={isFetching} />
 
-        <Button data-elem="search-button" onClick={applyFilters}>
-          Применить
-        </Button>
+            <Button disabled={!!isFetching} data-elem="search-button" type="submit">
+              Применить
+            </Button>
+          </Stack>
+        </form>
       </Stack>
     </Paper>
   );

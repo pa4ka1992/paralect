@@ -6,7 +6,7 @@ import { useGetAccessTokenQuery, LOCAL_STORAGE_NAMES } from 'shared';
 import { ResponseError } from 'entities';
 
 export const Layout: FC = () => {
-  const { data, isLoading, isSuccess, isError } = useGetAccessTokenQuery({});
+  const { data, isLoading, isSuccess, isError } = useGetAccessTokenQuery(null);
 
   useEffect(() => {
     if (isSuccess && data) {

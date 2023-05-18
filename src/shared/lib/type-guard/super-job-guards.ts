@@ -1,5 +1,5 @@
 import { IVacancy } from 'shared/model';
-import { Authorization, ICatalogue } from '../../model/types';
+import { Authorization, ICatalogue, ISearch } from '../../model/types';
 
 const requiredVacancyFields = [
   'id',
@@ -35,9 +35,13 @@ export const isVacancy = (response: unknown): response is IVacancy => {
   return false;
 };
 
-export const isVacancies = (response: unknown): response is IVacancy[] => {
-  if (response instanceof Array) {
-    return response.every((vacancy) => isVacancy(vacancy));
+export const isVacancies = (response: unknown): response is ISearch => {
+  if (response instanceof Object) {
+    if ('objects' in response && 'total' in response) {
+      if (response.objects instanceof Array) {
+        return response.objects.every((vacancy) => isVacancy(vacancy));
+      }
+    }
   }
 
   return false;

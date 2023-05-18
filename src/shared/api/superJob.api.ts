@@ -6,9 +6,12 @@ import {
   ICatalogue,
   isVacancies,
   isVacancy,
-  isCatalogues
+  isCatalogues,
+  ISearch,
+  RequestParams
 } from 'shared';
-import { prepareHeaders } from '../lib';
+import { getIdsParam, prepareHeaders } from '../lib';
+import { PUBLISHED, VACANCIES_PER_PAGE } from '../constants/superJob';
 
 export const superJobAPI = createApi({
   reducerPath: 'superJobAPI',
@@ -17,7 +20,7 @@ export const superJobAPI = createApi({
     prepareHeaders: prepareHeaders
   }),
   endpoints: (builder) => ({
-    getAccessToken: builder.query<Authorization | undefined, {}>({
+    getAccessToken: builder.query<Authorization | undefined, null>({
       query: () => ({
         url: '/2.0/oauth2/password',
         params: {
@@ -33,22 +36,21 @@ export const superJobAPI = createApi({
       }
     }),
 
-    searchVacancies: builder.query<
-      IVacancy[] | undefined,
-      { keyword: string; payment_from: string; payment_to: string; catalogues: string }
-    >({
-      query: ({ keyword, payment_from, payment_to, catalogues }) => ({
+    searchVacancies: builder.query<ISearch | undefined, RequestParams>({
+      query: ({ keyword, payment_from, payment_to, catalogues, page }) => ({
         url: '/2.0/vacancies',
         params: {
-          published: 1,
-          keyword: keyword,
-          payment_from: payment_from,
-          payment_to: payment_to,
-          catalogues: catalogues
+          published: PUBLISHED,
+          count: VACANCIES_PER_PAGE,
+          page,
+          keyword,
+          payment_from,
+          payment_to,
+          catalogues
         }
       }),
-      transformResponse: (response: { objects: unknown }) => {
-        return isVacancies(response.objects) ? response.objects : undefined;
+      transformResponse: (response: unknown) => {
+        return isVacancies(response) ? response : undefined;
       }
     }),
 
@@ -61,7 +63,7 @@ export const superJobAPI = createApi({
       }
     }),
 
-    getCatalogues: builder.query<ICatalogue[] | undefined, {}>({
+    getCatalogues: builder.query<ICatalogue[] | undefined, null>({
       query: () => ({
         url: '/2.0/catalogues'
       }),
@@ -70,16 +72,16 @@ export const superJobAPI = createApi({
       }
     }),
 
-    getFavorites: builder.query<IVacancy[] | undefined, { ids: number[] }>({
-      query: ({ ids }) => ({
-        url: '/2.0/vacancies',
+    getFavorites: builder.query<ISearch | undefined, { ids: number[]; page: number }>({
+      query: ({ ids, page }) => ({
+        url: `/2.0/vacancies?${getIdsParam(ids)}`,
         params: {
-          published: 1,
-          ids: ids
+          count: VACANCIES_PER_PAGE,
+          page: page - 1
         }
       }),
-      transformResponse: (response: { objects: unknown }) => {
-        return isVacancies(response.objects) ? response.objects : undefined;
+      transformResponse: (response: unknown) => {
+        return isVacancies(response) ? response : undefined;
       }
     })
   })

@@ -1,6 +1,6 @@
 import { BaseQueryApi } from '@reduxjs/toolkit/dist/query';
 import { MaybePromise } from '@reduxjs/toolkit/dist/query/tsHelpers';
-import { LOCAL_STORAGE_NAMES } from '../constants';
+import { LOCAL_STORAGE_NAMES } from '../../constants';
 
 type PrepareHeaders =
   | ((

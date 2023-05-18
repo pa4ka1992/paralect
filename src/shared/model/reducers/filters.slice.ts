@@ -1,22 +1,30 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RequestParams } from '../types';
 
 interface IFilters {
   search: string;
-  skipQuery: boolean;
+  requestParams: RequestParams;
   filters: {
-    category: string;
-    paymentFrom?: number | '';
-    paymentTo?: number | '';
+    catalogues: string;
+    payment_from?: number | '';
+    payment_to?: number | '';
   };
 }
 
+const initialParams: RequestParams = {
+  keyword: '',
+  payment_from: '',
+  payment_to: '',
+  catalogues: ''
+};
+
 const initialState: IFilters = {
   search: '',
-  skipQuery: false,
+  requestParams: initialParams,
   filters: {
-    category: '',
-    paymentFrom: '',
-    paymentTo: ''
+    catalogues: '',
+    payment_from: '',
+    payment_to: ''
   }
 };
 
@@ -28,37 +36,29 @@ const filtersSlice = createSlice({
       state.search = action.payload;
     },
 
-    setCategory(state, action: PayloadAction<string>) {
-      state.filters.category = action.payload;
+    setCatalogues(state, action: PayloadAction<string>) {
+      state.filters.catalogues = action.payload;
     },
 
     setPaymentFrom(state, action: PayloadAction<'' | number>) {
       const { filters } = state;
 
-      filters.paymentFrom = action.payload;
-
-      if (+filters.paymentFrom > +(filters.paymentTo || 0)) {
-        filters.paymentTo = action.payload;
-      }
+      filters.payment_from = action.payload;
     },
 
     setPaymentTo(state, action: PayloadAction<'' | number>) {
       const { filters } = state;
 
-      filters.paymentTo = action.payload;
-
-      if (+filters.paymentTo < +(filters.paymentFrom || 0)) {
-        filters.paymentFrom = 0;
-      }
+      filters.payment_to = action.payload;
     },
 
     resetFilters(state) {
       state.filters = initialState.filters;
-      state.skipQuery = false;
+      state.requestParams = initialParams;
     },
 
-    setSkipQuery(state, action: PayloadAction<boolean>) {
-      state.skipQuery = action.payload;
+    setRequestParams(state, action: PayloadAction<RequestParams>) {
+      state.requestParams = action.payload;
     }
   }
 });

@@ -3,35 +3,33 @@ import { IconSearch } from '@tabler/icons-react';
 import { FC, ChangeEvent } from 'react';
 import { useAppActions, useAppSelector } from 'shared';
 
-export const Searchbar: FC = () => {
+export const Searchbar: FC<{ isFetching: boolean }> = ({ isFetching }) => {
   const { search } = useAppSelector((state) => state.filtersReducer);
-  const { setSkipQuery } = useAppActions();
-  const { setSearch } = useAppActions();
+  const { setRequestParams, setSearch } = useAppActions();
 
   const changeSearch = (event: ChangeEvent<HTMLInputElement>) => {
-    setSkipQuery(true);
     setSearch(event.currentTarget.value);
   };
 
-  const startSearch = () => {
-    setSkipQuery(false);
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (isFetching) {
+      return;
+    }
+    setRequestParams({ keyword: search });
   };
 
   return (
-    <form
-      onSubmit={(event) => {
-        event.preventDefault();
-        startSearch();
-      }}
-    >
+    <form onSubmit={handleSubmit}>
       <TextInput
         data-elem="search-input"
+        disabled={!!isFetching}
         value={search}
         onChange={changeSearch}
         icon={<IconSearch size="20px" stroke={2} />}
         size="lg"
         rightSection={
-          <Button data-elem="search-button" type="submit" size="xs" onClick={startSearch}>
+          <Button data-elem="search-button" disabled={!!isFetching} type="submit" size="xs">
             Поиск
           </Button>
         }

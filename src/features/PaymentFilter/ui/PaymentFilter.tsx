@@ -2,12 +2,12 @@ import { NumberInput, Stack } from '@mantine/core';
 import { FC } from 'react';
 import { useAppActions, useAppSelector } from 'shared';
 
-export const PaymentFilter: FC = () => {
-  const { paymentFrom, paymentTo } = useAppSelector((state) => state.filtersReducer.filters);
-  const { setPaymentFrom, setPaymentTo, setSkipQuery } = useAppActions();
+export const PaymentFilter: FC<{ isFetching: boolean }> = ({ isFetching }) => {
+  const { payment_from, payment_to } = useAppSelector((state) => state.filtersReducer.filters);
+
+  const { setPaymentTo, setPaymentFrom } = useAppActions();
 
   const changePayment = (payload: number | '', type: string) => {
-    setSkipQuery(true);
     type === 'to' ? setPaymentTo(payload) : setPaymentFrom(payload);
   };
 
@@ -15,11 +15,12 @@ export const PaymentFilter: FC = () => {
     <Stack spacing="8px">
       <NumberInput
         data-elem="salary-from-input"
-        value={paymentFrom}
+        disabled={!!isFetching}
+        value={payment_from}
         onChange={(payload) => changePayment(payload, 'from')}
         type="number"
+        step={1}
         min={0}
-        step={500}
         label="Оклад"
         placeholder="От"
         styles={(theme) => ({
@@ -31,11 +32,12 @@ export const PaymentFilter: FC = () => {
       />
       <NumberInput
         data-elem="salary-to-input"
-        value={paymentTo}
+        disabled={!!isFetching}
+        value={payment_to}
         onChange={(payload) => changePayment(payload, 'to')}
         type="number"
+        step={1}
         min={0}
-        step={500}
         placeholder="До"
       />
     </Stack>

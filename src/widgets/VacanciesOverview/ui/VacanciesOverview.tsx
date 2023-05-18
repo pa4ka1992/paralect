@@ -1,20 +1,17 @@
 import { Stack } from '@mantine/core';
-import { FC, useState } from 'react';
+import { Dispatch, FC, SetStateAction } from 'react';
 import { EmptyList, Pagination, VacancyList } from 'features';
-import { IVacancy, usePaginationSlicer } from 'shared';
-import { PER_PAGE } from '../constants';
+import { ISearch } from 'shared';
 
 type Props = {
-  vacancies?: IVacancy[];
+  vacancies?: ISearch;
   isFetching: boolean;
+  page: number;
+  setPage: Dispatch<SetStateAction<number>>;
 };
 
-export const VacanciesOverview: FC<Props> = ({ vacancies, isFetching }) => {
-  const [page, setPage] = useState(1);
-
-  const { vacanciesOnPage } = usePaginationSlicer(PER_PAGE, page, vacancies);
-
-  const isShowEmpty = !isFetching && (!vacancies || !vacancies.length);
+export const VacanciesOverview: FC<Props> = ({ vacancies, isFetching, page, setPage }) => {
+  const isShowEmpty = !isFetching && !vacancies?.total;
 
   return (
     <>
@@ -22,8 +19,8 @@ export const VacanciesOverview: FC<Props> = ({ vacancies, isFetching }) => {
         <EmptyList />
       ) : (
         <Stack spacing="40px" sx={{ flex: '1 1 100%' }} h="100%">
-          <VacancyList vacancies={vacanciesOnPage} />
-          <Pagination controls={{ page, setPage, perPage: PER_PAGE, length: vacancies?.length }} />
+          <VacancyList vacancies={vacancies?.objects} />
+          <Pagination page={page} setPage={setPage} searchTotal={vacancies?.total} />
         </Stack>
       )}
     </>
