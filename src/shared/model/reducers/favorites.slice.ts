@@ -12,7 +12,7 @@ const initialState: IFavorites = {
 };
 
 const favoritesSlice = createSlice({
-  name: 'State',
+  name: 'favorites',
   initialState,
   reducers: {
     updateFavorites(state, action: PayloadAction<number>) {

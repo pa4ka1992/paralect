@@ -1,21 +1,27 @@
-import { FC, useMemo } from 'react';
+import { Dispatch, FC, SetStateAction, useEffect, useMemo } from 'react';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { Box, Pagination as MantinePagination } from '@mantine/core';
 import { TOTAL_PAGES, VACANCIES_PER_PAGE } from 'shared';
 
 type Props = {
   page: number;
-  setPage: ActionCreatorWithPayload<number, 'filters/setPage'>;
-  searchTotal?: number;
+  setPage: ActionCreatorWithPayload<number, 'filters/setPage'> | Dispatch<SetStateAction<number>>;
+  total?: number;
 };
 
-export const Pagination: FC<Props> = ({ page, setPage, searchTotal }) => {
+export const Pagination: FC<Props> = ({ page, setPage, total }) => {
   const { totalPages } = useMemo(() => {
-    const searchPages = searchTotal && Math.ceil(searchTotal / VACANCIES_PER_PAGE);
+    const searchPages = total && Math.ceil(total / VACANCIES_PER_PAGE);
     const totalPages = searchPages && searchPages < TOTAL_PAGES ? searchPages : TOTAL_PAGES;
 
     return { totalPages };
-  }, [searchTotal]);
+  }, [total]);
+
+  useEffect(() => {
+    if (totalPages < page) {
+      setPage(totalPages);
+    }
+  }, [totalPages, page, setPage]);
 
   const handlePage = (page: number) => {
     setPage(page);
