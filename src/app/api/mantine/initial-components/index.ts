@@ -5,3 +5,4 @@ export * from './ActionIcon';
 export * from './NavLink';
 export * from './NumberInput';
 export * from './Loader';
+export * from './Select';

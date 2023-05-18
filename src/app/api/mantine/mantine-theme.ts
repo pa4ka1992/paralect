@@ -1,5 +1,5 @@
 import { MantineThemeOverride } from '@mantine/core';
-import { AppShell, Button, Paper, ActionIcon, NavLink, NumberInput, Loader } from './initial-components';
+import { AppShell, Button, Paper, ActionIcon, NavLink, NumberInput, Loader, Select } from './initial-components';
 
 export const theme: MantineThemeOverride = {
   fontFamily: 'Inter, sans-serif',
@@ -48,7 +48,8 @@ export const theme: MantineThemeOverride = {
     ActionIcon,
     NavLink,
     NumberInput,
-    Loader
+    Loader,
+    Select
   },
   black: '#232134',
   other: {
