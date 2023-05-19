@@ -1,5 +1,6 @@
 export * from './LogoGroup';
 export * from './NavLink';
+export * from './BurgerMenu';
 
 export * from './ResetFilter';
 

@@ -1,4 +1,4 @@
 export * from './Header';
-export * from './Filters';
+export * from './Sidebar';
 export * from './VacanciesOverview';
 export * from './VacancyView';

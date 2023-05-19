@@ -28,7 +28,7 @@ export const Pagination: FC<Props> = ({ page, setPage, total }) => {
   };
 
   return (
-    <Box sx={{ alignSelf: 'center' }}>
+    <Box pos="sticky" bottom="0" sx={{ alignSelf: 'center' }}>
       <MantinePagination
         value={page}
         onChange={handlePage}

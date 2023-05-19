@@ -1,11 +1,13 @@
 import { FC, Suspense, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import { AppShell, Container, Loader } from '@mantine/core';
+import { AppShell, Container, Flex, Loader } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { Header } from 'widgets';
 import { useGetAccessTokenQuery, LOCAL_STORAGE_NAMES, RESPONSE_STATUS, STATUS_MESSAGE } from 'shared';
 import { ResponseError } from 'entities';
 
 export const Layout: FC = () => {
+  const [opened, handlers] = useDisclosure(false);
   const { data, isLoading, isSuccess, isError } = useGetAccessTokenQuery(null);
 
   useEffect(() => {
@@ -16,15 +18,17 @@ export const Layout: FC = () => {
 
   if (isError) {
     return (
-      <AppShell display="flex" sx={{ alignItems: 'center', justifyContent: 'center' }}>
-        <ResponseError codeStatus={RESPONSE_STATUS.unauthorized} message={STATUS_MESSAGE.unauthorized} />
+      <AppShell>
+        <Flex align="center" justify="center">
+          <ResponseError codeStatus={RESPONSE_STATUS.unauthorized} message={STATUS_MESSAGE.unauthorized} />
+        </Flex>
       </AppShell>
     );
   }
 
   return (
     <AppShell
-      header={<Header />}
+      header={<Header context={{ opened, handlers }} />}
       styles={{
         main: {
           paddingTop: '124px',
@@ -33,7 +37,7 @@ export const Layout: FC = () => {
       }}
     >
       <Container h="100%" size="xl" pos="relative">
-        <Suspense fallback={<Loader />}>{isLoading ? <Loader /> : <Outlet />}</Suspense>
+        <Suspense fallback={<Loader />}>{isLoading ? <Loader /> : <Outlet context={{ opened, handlers }} />}</Suspense>
       </Container>
     </AppShell>
   );

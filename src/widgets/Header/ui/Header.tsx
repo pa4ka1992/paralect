@@ -1,14 +1,19 @@
 import { FC } from 'react';
-import { Container, Header as MantineHeader } from '@mantine/core';
-import { LogoGroup } from 'entities';
+import { Container, Group, Header as MantineHeader } from '@mantine/core';
+import { BurgerMenu, LogoGroup } from 'entities';
 import { Navbar } from 'features';
+import { OutletProps, useMatchBreakPoints } from 'shared';
 
-export const Header: FC = () => {
+export const Header: FC<{ context: OutletProps }> = ({ context }) => {
+  const { isMatches } = useMatchBreakPoints('md');
+
   return (
-    <MantineHeader height={84} sx={{ borderBottom: 0 }}>
-      <Container size="xl" sx={(theme) => ({ display: 'flex', gap: theme.spacing.sm, height: '100%' })}>
-        <LogoGroup />
-        <Navbar />
+    <MantineHeader pos="fixed" top="0" height={84} sx={{ borderBottom: 0 }}>
+      <Container h="100%" size="xl">
+        <Group h="100%" align="center" position="apart" spacing="sm" noWrap>
+          <LogoGroup />
+          {isMatches ? <Navbar /> : <BurgerMenu context={context} />}
+        </Group>
       </Container>
     </MantineHeader>
   );
