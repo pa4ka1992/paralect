@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Stack, Group, Button, Paper, Title } from '@mantine/core';
+import { Stack, Group, Button, Title, MediaQuery } from '@mantine/core';
 import { ResetFilter } from 'entities';
 import { CategoryFilter, PaymentFilter } from 'features';
 import { useAppActions } from 'shared';
@@ -17,25 +17,26 @@ export const Filters: FC<{ isFetching: boolean }> = ({ isFetching }) => {
   };
 
   return (
-    <Paper w="315px" sx={{ flex: '0 0 auto' }}>
-      <Stack spacing="md" m="1px">
-        <Group mb="12px" noWrap align="center" position="apart">
+    <Stack spacing="md" m="1px">
+      <Group mb={{ lg: '12px', md: '12px' }} noWrap align="center" position="apart">
+        <MediaQuery smallerThan="md" styles={{ display: 'none' }}>
           <Title order={3}>Фильтры</Title>
-          <ResetFilter />
-        </Group>
+        </MediaQuery>
 
-        <form onSubmit={handleSubmit}>
-          <Stack spacing="md">
-            <CategoryFilter />
+        <ResetFilter />
+      </Group>
 
-            <PaymentFilter isFetching={isFetching} />
+      <form onSubmit={handleSubmit}>
+        <Stack spacing="md">
+          <CategoryFilter />
 
-            <Button disabled={!!isFetching} data-elem="search-button" type="submit">
-              Применить
-            </Button>
-          </Stack>
-        </form>
-      </Stack>
-    </Paper>
+          <PaymentFilter isFetching={isFetching} />
+
+          <Button disabled={!!isFetching} data-elem="search-button" type="submit">
+            Применить
+          </Button>
+        </Stack>
+      </form>
+    </Stack>
   );
 };

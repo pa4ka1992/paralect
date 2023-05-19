@@ -1,15 +1,9 @@
 import { FC } from 'react';
 import { Drawer, MediaQuery, Stack } from '@mantine/core';
 import { OutletProps } from 'shared';
-import { Searchbar } from 'features';
-import { Filters } from '..';
+import { Navbar } from './Navbar';
 
-type Props = {
-  isFetching: boolean;
-  context: OutletProps;
-};
-
-export const Sidebar: FC<Props> = ({ isFetching, context }) => {
+export const NavbarDrawer: FC<{ context: OutletProps }> = ({ context }) => {
   const { opened, handlers } = context;
 
   return (
@@ -17,23 +11,20 @@ export const Sidebar: FC<Props> = ({ isFetching, context }) => {
       <Drawer
         padding="xs"
         opened={opened}
+        position="top"
         onClose={handlers.close}
-        title="Фильтры"
+        title="Навигация"
         overlayProps={{ opacity: 0.5, blur: 4 }}
         withCloseButton={true}
         closeButtonProps={{ color: 'whites.6', size: 'md' }}
-        styles={(theme) => ({
-          title: {
-            fontWeight: theme.other.fontWeight.bold
-          },
-          content: {
-            padding: theme.spacing.xs
+        sx={{
+          '.mantine-Drawer-content': {
+            height: 'auto'
           }
-        })}
+        }}
       >
-        <Stack>
-          <Searchbar isFetching={isFetching} />
-          <Filters isFetching={isFetching} />
+        <Stack spacing="0" onClick={handlers.close}>
+          <Navbar />
         </Stack>
       </Drawer>
     </MediaQuery>

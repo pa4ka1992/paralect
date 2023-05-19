@@ -5,6 +5,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { Header } from 'widgets';
 import { useGetAccessTokenQuery, LOCAL_STORAGE_NAMES, RESPONSE_STATUS, STATUS_MESSAGE } from 'shared';
 import { ResponseError } from 'entities';
+import { NavbarDrawer } from 'features';
 
 export const Layout: FC = () => {
   const [opened, handlers] = useDisclosure(false);
@@ -19,7 +20,7 @@ export const Layout: FC = () => {
   if (isError) {
     return (
       <AppShell>
-        <Flex align="center" justify="center">
+        <Flex align="center" justify="center" h="100%">
           <ResponseError codeStatus={RESPONSE_STATUS.unauthorized} message={STATUS_MESSAGE.unauthorized} />
         </Flex>
       </AppShell>
@@ -29,6 +30,7 @@ export const Layout: FC = () => {
   return (
     <AppShell
       header={<Header context={{ opened, handlers }} />}
+      navbar={<NavbarDrawer context={{ opened, handlers }} />}
       styles={{
         main: {
           paddingTop: '124px',
@@ -37,7 +39,7 @@ export const Layout: FC = () => {
       }}
     >
       <Container h="100%" size="xl" pos="relative">
-        <Suspense fallback={<Loader />}>{isLoading ? <Loader /> : <Outlet context={{ opened, handlers }} />}</Suspense>
+        <Suspense fallback={<Loader />}>{isLoading ? <Loader /> : <Outlet />}</Suspense>
       </Container>
     </AppShell>
   );

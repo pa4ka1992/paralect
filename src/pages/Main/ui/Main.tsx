@@ -1,19 +1,13 @@
 import { FC } from 'react';
-import { Flex, Loader, Stack } from '@mantine/core';
+import { AppShell, Box, Flex, MediaQuery, Paper, Stack } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { Searchbar } from 'features';
 import { Filters, Sidebar, VacanciesOverview } from 'widgets';
-import {
-  RESPONSE_STATUS,
-  STATUS_MESSAGE,
-  useAppActions,
-  useAppSelector,
-  useMatchBreakPoints,
-  useSearchVacanciesQuery
-} from 'shared';
-import { ResponseError } from 'entities';
+import { RESPONSE_STATUS, STATUS_MESSAGE, useAppActions, useAppSelector, useSearchVacanciesQuery } from 'shared';
+import { ResponseError, SidebarButton } from 'entities';
 
 export const Main: FC = () => {
-  const { isMatches } = useMatchBreakPoints('md');
+  const [opened, handlers] = useDisclosure(false);
 
   const { requestParams } = useAppSelector((state) => state.filtersReducer);
   const { setPage } = useAppActions();
@@ -25,22 +19,36 @@ export const Main: FC = () => {
   }
 
   return (
-    <Flex align="flex-start" wrap="nowrap" gap="xl" h="100%">
-      {isMatches ? <Filters isFetching={isFetching} /> : <Sidebar isFetching={isFetching} />}
+    <AppShell
+      h="100%"
+      padding="0"
+      navbar={<Sidebar isFetching={isFetching} context={{ opened, handlers }} />}
+      styles={{ main: { minHeight: 'auto' }, body: { height: '100%' } }}
+    >
+      <Flex align="flex-start" wrap="nowrap" gap="xl" h="100%">
+        <MediaQuery smallerThan="md" styles={{ display: 'none' }}>
+          <Paper w="315px" sx={{ flex: '0 0 auto' }}>
+            <Filters isFetching={isFetching} />
+          </Paper>
+        </MediaQuery>
 
-      <Stack sx={{ flex: '1 1 auto' }} h="100%" pos="relative">
-        <Searchbar isFetching={isFetching} />
-        {isFetching ? (
-          <Loader />
-        ) : (
+        <Stack sx={{ flex: '1 1 auto' }} h="100%" pos="relative">
+          <SidebarButton open={handlers.open} />
+
+          <MediaQuery smallerThan="md" styles={{ display: 'none' }}>
+            <Box>
+              <Searchbar isFetching={isFetching} />
+            </Box>
+          </MediaQuery>
+
           <VacanciesOverview
             vacancies={searchResult}
             isFetching={isFetching}
             page={requestParams.page}
             setPage={setPage}
           />
-        )}
-      </Stack>
-    </Flex>
+        </Stack>
+      </Flex>
+    </AppShell>
   );
 };

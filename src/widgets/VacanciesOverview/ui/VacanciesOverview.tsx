@@ -1,6 +1,6 @@
 import { Dispatch, FC, SetStateAction } from 'react';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
-import { Stack } from '@mantine/core';
+import { Loader, Stack } from '@mantine/core';
 import { EmptyList, Pagination, VacancyList } from 'features';
 import { ISearch } from 'shared';
 
@@ -13,6 +13,10 @@ type Props = {
 
 export const VacanciesOverview: FC<Props> = ({ vacancies, isFetching, page, setPage }) => {
   const isShowEmpty = !isFetching && !vacancies?.total;
+
+  if (isFetching) {
+    return <Loader />;
+  }
 
   return (
     <>

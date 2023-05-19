@@ -11,6 +11,7 @@ export const NavLink: FC<{ route: string; label: string }> = ({ route, label }) 
 
   return (
     <MantineNavLink
+      w="auto"
       c={isMatchingRoute ? 'blues.1' : undefined}
       fw={isMatchingRoute ? theme.other.fontWeight.medium : undefined}
       label={label}
