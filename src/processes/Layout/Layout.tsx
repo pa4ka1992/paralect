@@ -3,12 +3,20 @@ import { Outlet } from 'react-router-dom';
 import { AppShell, Container, Flex, Loader } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Header } from 'widgets';
-import { useGetAccessTokenQuery, LOCAL_STORAGE_NAMES, RESPONSE_STATUS, STATUS_MESSAGE } from 'shared';
+import {
+  useGetAccessTokenQuery,
+  LOCAL_STORAGE_NAMES,
+  RESPONSE_STATUS,
+  STATUS_MESSAGE,
+  useMatchBreakPoints
+} from 'shared';
 import { ResponseError } from 'entities';
 import { NavbarDrawer } from 'features';
 
 export const Layout: FC = () => {
   const [opened, handlers] = useDisclosure(false);
+  const { isMatches } = useMatchBreakPoints('md');
+
   const { data, isLoading, isSuccess, isError } = useGetAccessTokenQuery(null);
 
   useEffect(() => {
@@ -33,12 +41,12 @@ export const Layout: FC = () => {
       navbar={<NavbarDrawer context={{ opened, handlers }} />}
       styles={{
         main: {
-          paddingTop: '124px',
-          paddingBottom: '44px'
+          paddingTop: isMatches ? '124px' : '60px',
+          paddingBottom: isMatches ? '24px' : '14px'
         }
       }}
     >
-      <Container h="100%" size="xl" pos="relative">
+      <Container p={isMatches ? 'md' : 0} h="100%" size="xl" pos="relative">
         <Suspense fallback={<Loader />}>{isLoading ? <Loader /> : <Outlet />}</Suspense>
       </Container>
     </AppShell>

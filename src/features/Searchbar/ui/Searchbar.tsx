@@ -1,9 +1,9 @@
 import { Button, TextInput } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
 import { FC, ChangeEvent } from 'react';
-import { useAppActions, useAppSelector } from 'shared';
+import { OutletProps, useAppActions, useAppSelector } from 'shared';
 
-export const Searchbar: FC<{ isFetching: boolean }> = ({ isFetching }) => {
+export const Searchbar: FC<{ isFetching: boolean; context?: OutletProps }> = ({ isFetching, context }) => {
   const { keyword } = useAppSelector((state) => state.filtersReducer.filtersState);
   const { setRequestParams, setKeyword } = useAppActions();
 
@@ -16,7 +16,12 @@ export const Searchbar: FC<{ isFetching: boolean }> = ({ isFetching }) => {
     if (isFetching) {
       return;
     }
+
     setRequestParams();
+
+    if (context) {
+      context.handlers.close();
+    }
   };
 
   return (

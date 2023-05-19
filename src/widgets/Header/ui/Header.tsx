@@ -2,14 +2,16 @@ import { FC } from 'react';
 import { Burger, Container, Flex, Group, Header as MantineHeader, MediaQuery } from '@mantine/core';
 import { LogoGroup } from 'entities';
 import { Navbar } from 'features';
-import { OutletProps } from 'shared';
+import { OutletProps, useMatchBreakPoints } from 'shared';
 
 export const Header: FC<{ context: OutletProps }> = ({ context }) => {
+  const { isMatches } = useMatchBreakPoints('md');
+
   const { opened, handlers } = context;
   const label = opened ? 'Close navigation' : 'Open navigation';
 
   return (
-    <MantineHeader pos="fixed" top="0" height={84} sx={{ borderBottom: 0 }}>
+    <MantineHeader pos="fixed" top="0" height={isMatches ? 84 : 60} sx={{ borderBottom: 0 }}>
       <Container h="100%" size="xl">
         <Group h="100%" align="center" position="apart" spacing="sm" noWrap>
           <LogoGroup />

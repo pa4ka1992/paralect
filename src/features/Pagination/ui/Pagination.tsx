@@ -1,7 +1,7 @@
 import { Dispatch, FC, SetStateAction, useEffect, useMemo } from 'react';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
-import { Box, Pagination as MantinePagination } from '@mantine/core';
-import { TOTAL_PAGES, VACANCIES_PER_PAGE } from 'shared';
+import { Pagination as MantinePagination, Paper } from '@mantine/core';
+import { TOTAL_PAGES, useMatchBreakPoints, VACANCIES_PER_PAGE } from 'shared';
 
 type Props = {
   page: number;
@@ -10,6 +10,8 @@ type Props = {
 };
 
 export const Pagination: FC<Props> = ({ page, setPage, total }) => {
+  const { isMatches } = useMatchBreakPoints('xs');
+
   const { totalPages } = useMemo(() => {
     const searchPages = total && Math.ceil(total / VACANCIES_PER_PAGE);
     const totalPages = searchPages && searchPages < TOTAL_PAGES ? searchPages : TOTAL_PAGES;
@@ -28,20 +30,20 @@ export const Pagination: FC<Props> = ({ page, setPage, total }) => {
   };
 
   return (
-    <Box pos="sticky" bottom="44px" sx={{ alignSelf: 'center' }}>
+    <Paper withBorder={false} p="sm" bg="whites.2" pos="sticky" bottom="0" sx={{ alignSelf: 'center' }}>
       <MantinePagination
         value={page}
         onChange={handlePage}
         total={totalPages}
         siblings={1}
         radius="sm"
-        size="md"
+        withControls={isMatches}
         styles={(theme) => ({
           control: {
             fontSize: theme.fontSizes.sm
           }
         })}
       />
-    </Box>
+    </Paper>
   );
 };

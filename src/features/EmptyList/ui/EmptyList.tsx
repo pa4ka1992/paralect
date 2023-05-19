@@ -17,7 +17,7 @@ export const EmptyList: FC = () => {
       <Flex align="flex-start" justify="center" h="100%">
         <Stack align="center" spacing="32px">
           <EmptyImage width="240px" height="230px" />
-          <Title order={3}>
+          <Title ta="center" order={3}>
             {isRouteFavorite ? 'Упс, здесь еще ничего нет!' : 'По вашему запросу ничего не найдено'}
           </Title>
           {isRouteFavorite && (

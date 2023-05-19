@@ -32,8 +32,8 @@ export const Sidebar: FC<Props> = ({ isFetching, context }) => {
         })}
       >
         <Stack>
-          <Searchbar isFetching={isFetching} />
-          <Filters isFetching={isFetching} />
+          <Searchbar isFetching={isFetching} context={context} />
+          <Filters isFetching={isFetching} context={context} />
         </Stack>
       </Drawer>
     </MediaQuery>

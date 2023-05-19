@@ -2,9 +2,9 @@ import { FC } from 'react';
 import { Stack, Group, Button, Title, MediaQuery } from '@mantine/core';
 import { ResetFilter } from 'entities';
 import { CategoryFilter, PaymentFilter } from 'features';
-import { useAppActions } from 'shared';
+import { OutletProps, useAppActions } from 'shared';
 
-export const Filters: FC<{ isFetching: boolean }> = ({ isFetching }) => {
+export const Filters: FC<{ isFetching: boolean; context?: OutletProps }> = ({ isFetching, context }) => {
   const { setRequestParams } = useAppActions();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -14,6 +14,10 @@ export const Filters: FC<{ isFetching: boolean }> = ({ isFetching }) => {
     }
 
     setRequestParams();
+
+    if (context) {
+      context.handlers.close();
+    }
   };
 
   return (
