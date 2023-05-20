@@ -3,8 +3,15 @@ import { AppShell, Box, Flex, MediaQuery, Paper, Stack } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Searchbar } from 'features';
 import { Filters, Sidebar, VacanciesOverview } from 'widgets';
-import { RESPONSE_STATUS, STATUS_MESSAGE, useAppActions, useAppSelector, useSearchVacanciesQuery } from 'shared';
-import { ResponseError, SidebarButton } from 'entities';
+import {
+  RESPONSE_STATUS,
+  STATUS_MESSAGE,
+  useAppActions,
+  useAppSelector,
+  useSearchVacanciesQuery,
+  ResponseError
+} from 'shared';
+import { SidebarButton } from 'entities';
 
 export const Main: FC = () => {
   const [opened, handlers] = useDisclosure(false);
@@ -21,7 +28,7 @@ export const Main: FC = () => {
   return (
     <AppShell
       h="100%"
-      padding="0"
+      padding="0 10px 0 10px"
       navbar={<Sidebar isFetching={isFetching} context={{ opened, handlers }} />}
       styles={{ main: { minHeight: 'auto' }, body: { height: '100%' } }}
     >

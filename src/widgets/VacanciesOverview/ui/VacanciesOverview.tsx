@@ -1,8 +1,9 @@
 import { Dispatch, FC, SetStateAction } from 'react';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
-import { Loader, Stack } from '@mantine/core';
-import { EmptyList, Pagination, VacancyList } from 'features';
-import { ISearch } from 'shared';
+import { Stack } from '@mantine/core';
+import { Pagination, VacancyList } from 'features';
+import { ISearch, Loader } from 'shared';
+import { EmptyList } from 'entities';
 
 type Props = {
   vacancies?: ISearch;

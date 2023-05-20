@@ -1,6 +1,5 @@
 export * from './Navbar';
 
-export * from './EmptyList';
 export * from './VacancyList';
 export * from './Pagination';
 

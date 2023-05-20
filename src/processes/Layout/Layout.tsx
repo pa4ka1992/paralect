@@ -1,6 +1,6 @@
 import { FC, Suspense, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import { AppShell, Container, Flex, Loader } from '@mantine/core';
+import { AppShell, Container, Flex } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Header } from 'widgets';
 import {
@@ -8,9 +8,10 @@ import {
   LOCAL_STORAGE_NAMES,
   RESPONSE_STATUS,
   STATUS_MESSAGE,
-  useMatchBreakPoints
+  useMatchBreakPoints,
+  ResponseError,
+  Loader
 } from 'shared';
-import { ResponseError } from 'entities';
 import { NavbarDrawer } from 'features';
 
 export const Layout: FC = () => {
@@ -41,7 +42,7 @@ export const Layout: FC = () => {
       navbar={<NavbarDrawer context={{ opened, handlers }} />}
       styles={{
         main: {
-          paddingTop: isMatches ? '124px' : '60px',
+          paddingTop: isMatches ? '124px' : '90px',
           paddingBottom: isMatches ? '24px' : '14px'
         }
       }}

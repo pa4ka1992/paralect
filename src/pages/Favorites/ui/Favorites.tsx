@@ -1,9 +1,8 @@
 import { FC, useState } from 'react';
-import { Container, Loader } from '@mantine/core';
-import { RESPONSE_STATUS, STATUS_MESSAGE, useAppSelector, useGetFavoritesQuery } from 'shared';
+import { Container } from '@mantine/core';
+import { RESPONSE_STATUS, STATUS_MESSAGE, useAppSelector, useGetFavoritesQuery, ResponseError, Loader } from 'shared';
 import { VacanciesOverview } from 'widgets';
-import { ResponseError } from 'entities';
-import { EmptyList } from 'features';
+import { EmptyList } from 'entities';
 
 export const Favorites: FC = () => {
   const [page, setPage] = useState(1);
