@@ -1,10 +1,10 @@
 {
-  "name": "graphi-ql",
+  "name": "startup-summer2023",
   "version": "1.0.0",
   "description": "test task",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pa4ka1992/graphiql-app"
+    "url": "https://github.com/pa4ka1992/paralect"
   },
   "author": "Kisly Nikita",
   "license": "MIT",
@@ -12,6 +12,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "deploy": "tsc && vite build && cp _redirects dist/",
     "prepare": "husky install",
     "lint": "eslint --ext js,ts,tsx src"
   },
