@@ -8,7 +8,7 @@ export const SearchButton: FC<{ isFetching: boolean }> = ({ isFetching }) => {
 
   if (isMatches) {
     return (
-      <Button data-elem="search-button" disabled={!!isFetching} type="submit" size="xs">
+      <Button h="30px" data-elem="search-button" disabled={!!isFetching} type="submit" size="xs">
         Поиск
       </Button>
     );
