@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { Box, Group, Text, useMantineTheme } from '@mantine/core';
 import { IconMapPin, IconPointFilled } from '@tabler/icons-react';
 import { IVacancy, useMatchBreakPoints } from 'shared';
+import { getPaymentRange } from '../lib/getPaymentRange';
 
 type Props = {
   vacancy: IVacancy;
@@ -16,17 +17,10 @@ export const VacancyShortInfo: FC<Props> = ({ vacancy }) => {
   return (
     <>
       <Group fz={isMatches ? 'sm' : 'xs'} spacing="xs">
-        {payment_from || payment_to ? (
-          <>
-            <Text fw={theme.other.fontWeight.semibold}>
-              з/п {payment_to ? `${payment_from} - ${payment_to} ${currency}` : `от ${payment_from} ${currency}`}
-            </Text>
-
-            <Box c={theme.colors.whites[5]}>
-              <IconPointFilled size={isMatches ? '12px' : '10px'} stroke="1.5" />
-            </Box>
-          </>
-        ) : null}
+        <Text fw={theme.other.fontWeight.semibold}>{getPaymentRange(payment_from, payment_to, currency)}</Text>
+        <Box c={theme.colors.whites[5]}>
+          <IconPointFilled size={isMatches ? '12px' : '10px'} stroke="1.5" />
+        </Box>
 
         <Text>{type_of_work.title}</Text>
       </Group>
