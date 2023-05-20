@@ -1,2 +1,2 @@
 export * from './superJob';
-export * from './outletProps';
+export * from './disclosureProps';

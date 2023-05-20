@@ -1,4 +1,4 @@
-export type OutletProps = {
+export type DisclosureProps = {
   opened: boolean;
   handlers: {
     readonly open: () => void;

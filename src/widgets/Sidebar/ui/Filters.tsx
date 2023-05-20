@@ -2,9 +2,11 @@ import { FC } from 'react';
 import { Stack, Group, Button, Title, MediaQuery } from '@mantine/core';
 import { ResetFilter } from 'entities';
 import { CategoryFilter, PaymentFilter } from 'features';
-import { OutletProps, useAppActions } from 'shared';
+import { DisclosureProps, useAppActions, useMatchBreakPoints } from 'shared';
 
-export const Filters: FC<{ isFetching: boolean; context?: OutletProps }> = ({ isFetching, context }) => {
+export const Filters: FC<{ isFetching: boolean; context?: DisclosureProps }> = ({ isFetching, context }) => {
+  const { isMatches } = useMatchBreakPoints('sm');
+
   const { setRequestParams } = useAppActions();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -36,7 +38,7 @@ export const Filters: FC<{ isFetching: boolean; context?: OutletProps }> = ({ is
 
           <PaymentFilter isFetching={isFetching} />
 
-          <Button disabled={!!isFetching} data-elem="search-button" type="submit">
+          <Button size={isMatches ? 'md' : 'xs'} disabled={!!isFetching} data-elem="search-button" type="submit">
             Применить
           </Button>
         </Stack>

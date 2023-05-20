@@ -1,11 +1,13 @@
 import { FC, useMemo, useState } from 'react';
 import { Select, useMantineTheme } from '@mantine/core';
 import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
-import { useAppActions, useAppSelector, useGetCataloguesQuery } from 'shared';
+import { useAppActions, useAppSelector, useGetCataloguesQuery, useMatchBreakPoints } from 'shared';
 
 export const CategoryFilter: FC = () => {
   const [isOpened, setIsOpened] = useState(false);
+
   const theme = useMantineTheme();
+  const { isMatches } = useMatchBreakPoints('sm');
 
   const { catalogues } = useAppSelector((state) => state.filtersReducer.filtersState);
   const { setCatalogues } = useAppActions();
@@ -33,6 +35,7 @@ export const CategoryFilter: FC = () => {
       onChange={changeCategory}
       onDropdownOpen={() => setIsOpened(true)}
       onDropdownClose={() => setIsOpened(false)}
+      size={isMatches ? 'sm' : 'xs'}
       rightSectionWidth={46}
       label="Отрасль"
       placeholder="Выберите отрасль"

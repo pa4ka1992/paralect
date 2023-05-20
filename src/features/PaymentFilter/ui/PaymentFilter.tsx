@@ -1,10 +1,11 @@
 import { NumberInput, Stack } from '@mantine/core';
 import { FC } from 'react';
-import { useAppActions, useAppSelector } from 'shared';
+import { useAppActions, useAppSelector, useMatchBreakPoints } from 'shared';
 
 export const PaymentFilter: FC<{ isFetching: boolean }> = ({ isFetching }) => {
-  const { payment_from, payment_to } = useAppSelector((state) => state.filtersReducer.filtersState);
+  const { isMatches } = useMatchBreakPoints('sm');
 
+  const { payment_from, payment_to } = useAppSelector((state) => state.filtersReducer.filtersState);
   const { setPaymentTo, setPaymentFrom } = useAppActions();
 
   const changePayment = (payload: number | '', type: string) => {
@@ -23,6 +24,7 @@ export const PaymentFilter: FC<{ isFetching: boolean }> = ({ isFetching }) => {
         min={0}
         label="Оклад"
         placeholder="От"
+        size={isMatches ? 'sm' : 'xs'}
         styles={(theme) => ({
           label: {
             marginBottom: '8px',
@@ -39,6 +41,7 @@ export const PaymentFilter: FC<{ isFetching: boolean }> = ({ isFetching }) => {
         step={1}
         min={0}
         placeholder="До"
+        size={isMatches ? 'sm' : 'xs'}
       />
     </Stack>
   );

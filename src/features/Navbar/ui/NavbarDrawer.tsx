@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import { Drawer, MediaQuery, Stack } from '@mantine/core';
-import { OutletProps } from 'shared';
+import { DisclosureProps } from 'shared';
 import { Navbar } from './Navbar';
 
-export const NavbarDrawer: FC<{ context: OutletProps }> = ({ context }) => {
+export const NavbarDrawer: FC<{ context: DisclosureProps }> = ({ context }) => {
   const { opened, handlers } = context;
 
   return (

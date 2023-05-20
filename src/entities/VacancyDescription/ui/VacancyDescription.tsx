@@ -1,16 +1,20 @@
 import { Paper, Text } from '@mantine/core';
 import { FC } from 'react';
-import { IVacancy } from 'shared';
+import { IVacancy, useMatchBreakPoints } from 'shared';
 
 type Props = {
   vacancy: IVacancy;
 };
 
 export const VacancyViewDescription: FC<Props> = ({ vacancy }) => {
+  const { isMatches } = useMatchBreakPoints('xs');
+  const formatted = vacancy.vacancyRichText.replace('<br />', '');
+
   return (
-    <Paper>
+    <Paper p={isMatches ? 'md' : 'xs'}>
       <Text
-        dangerouslySetInnerHTML={{ __html: vacancy.vacancyRichText }}
+        fz={isMatches ? 'sm' : 'xs'}
+        dangerouslySetInnerHTML={{ __html: formatted }}
         sx={{
           li: {
             padding: '3px'

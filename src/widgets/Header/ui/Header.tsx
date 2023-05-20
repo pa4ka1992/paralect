@@ -2,9 +2,9 @@ import { FC } from 'react';
 import { Burger, Container, Flex, Group, Header as MantineHeader, MediaQuery } from '@mantine/core';
 import { LogoGroup } from 'entities';
 import { Navbar } from 'features';
-import { OutletProps, useMatchBreakPoints } from 'shared';
+import { DisclosureProps, useMatchBreakPoints } from 'shared';
 
-export const Header: FC<{ context: OutletProps }> = ({ context }) => {
+export const Header: FC<{ context: DisclosureProps }> = ({ context }) => {
   const { isMatches } = useMatchBreakPoints('md');
 
   const { opened, handlers } = context;

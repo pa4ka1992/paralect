@@ -1,16 +1,17 @@
 import { FC } from 'react';
 import { Drawer, MediaQuery, Stack } from '@mantine/core';
-import { OutletProps } from 'shared';
+import { DisclosureProps, useMatchBreakPoints } from 'shared';
 import { Searchbar } from 'features';
 import { Filters } from '..';
 
 type Props = {
   isFetching: boolean;
-  context: OutletProps;
+  context: DisclosureProps;
 };
 
 export const Sidebar: FC<Props> = ({ isFetching, context }) => {
   const { opened, handlers } = context;
+  const { isMatches } = useMatchBreakPoints('sm');
 
   return (
     <MediaQuery largerThan="md" styles={{ display: 'none' }}>
@@ -24,6 +25,7 @@ export const Sidebar: FC<Props> = ({ isFetching, context }) => {
         closeButtonProps={{ color: 'whites.6', size: 'md' }}
         styles={(theme) => ({
           title: {
+            fontSize: theme.fontSizes[isMatches ? 'md' : 'sm'],
             fontWeight: theme.other.fontWeight.bold
           },
           content: {

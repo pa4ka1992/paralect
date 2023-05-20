@@ -3,7 +3,9 @@ import { useMediaQuery } from '@mantine/hooks';
 
 export const useMatchBreakPoints = (breakpoint: MantineSize) => {
   const theme = useMantineTheme();
-  const isMatches = useMediaQuery(`(min-width: ${getBreakpointValue(theme.breakpoints[breakpoint])}px)`);
+  const isMatches = useMediaQuery(`(min-width: ${getBreakpointValue(theme.breakpoints[breakpoint])}px)`, undefined, {
+    getInitialValueInEffect: false
+  });
 
   return { isMatches };
 };

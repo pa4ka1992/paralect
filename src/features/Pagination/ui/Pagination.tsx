@@ -43,6 +43,7 @@ export const Pagination: FC<Props> = ({ page, setPage, total }) => {
             fontSize: theme.fontSizes.sm
           }
         })}
+        sx={{ justifyContent: 'center' }}
       />
     </Paper>
   );
