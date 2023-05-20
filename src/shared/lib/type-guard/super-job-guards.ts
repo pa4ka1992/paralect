@@ -30,12 +30,20 @@ export const isVacancy = (response: unknown): response is IVacancy => {
   return false;
 };
 
-export const isVacancies = (response: unknown): response is ISearch => {
+const isSearchResult = (response: unknown): response is { objects: unknown; total: unknown } => {
   if (response instanceof Object) {
-    if ('objects' in response && 'total' in response) {
-      if (response.objects instanceof Array) {
-        return response.objects.every((vacancy) => isVacancy(vacancy));
-      }
+    return 'objects' in response && 'total' in response;
+  }
+
+  return false;
+};
+
+export const isVacancies = (response: unknown): response is ISearch => {
+  if (isSearchResult(response)) {
+    const { objects, total } = response;
+
+    if (objects instanceof Array) {
+      return objects.every((vacancy) => isVacancy(vacancy)) && typeof total === 'number';
     }
   }
 
