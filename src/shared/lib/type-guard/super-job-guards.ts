@@ -1,20 +1,15 @@
 import { IVacancy } from 'shared/model';
 import { Authorization, ICatalogue, ISearch } from '../../model/types';
-
-const requiredVacancyFields = [
-  'id',
-  'profession',
-  'firm_name',
-  'town',
-  'type_of_work',
-  'payment_to',
-  'payment_from',
-  'currency',
-  'vacancyRichText'
-];
+import { requiredAuthFields, requiredVacancyFields } from './constants';
 
 export const isAuthorizationResponse = (response: unknown): response is Authorization => {
-  return response instanceof Object && 'access_token' in response;
+  if (response instanceof Object) {
+    return requiredAuthFields.every((field) => {
+      return field in response;
+    });
+  }
+
+  return false;
 };
 
 export const isCatalogues = (response: unknown): response is ICatalogue[] => {

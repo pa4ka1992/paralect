@@ -10,7 +10,7 @@ import {
   ISearch,
   RequestParams
 } from 'shared';
-import { getIdsParam, prepareHeaders } from '../lib';
+import { getIdsParam, prepareHeaders, removeEmptyParams } from '../lib';
 import { PUBLISHED, VACANCIES_PER_PAGE } from '../constants/superJob';
 
 export const superJobAPI = createApi({
@@ -20,7 +20,7 @@ export const superJobAPI = createApi({
     prepareHeaders: prepareHeaders
   }),
   endpoints: (builder) => ({
-    getAccessToken: builder.query<Authorization | undefined, null>({
+    getAuthorization: builder.query<Authorization | undefined, null>({
       query: () => ({
         url: '/2.0/oauth2/password',
         params: {
@@ -43,7 +43,7 @@ export const superJobAPI = createApi({
           published: PUBLISHED,
           count: VACANCIES_PER_PAGE,
           page: page - 1,
-          ...rest
+          ...removeEmptyParams(rest)
         }
       }),
       transformResponse: (response: unknown) => {
@@ -85,7 +85,7 @@ export const superJobAPI = createApi({
 });
 
 export const {
-  useGetAccessTokenQuery,
+  useLazyGetAuthorizationQuery,
   useGetCataloguesQuery,
   useLazyGetVacancyQuery,
   useSearchVacanciesQuery,

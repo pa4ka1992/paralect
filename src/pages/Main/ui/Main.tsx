@@ -2,16 +2,19 @@ import { FC } from 'react';
 import { AppShell, Box, Flex, MediaQuery, Paper, Stack } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Searchbar } from 'features';
-import { Filters, Sidebar, VacanciesOverview } from 'widgets';
+import { Filters, VacanciesOverview } from 'widgets';
 import {
   RESPONSE_STATUS,
   STATUS_MESSAGE,
   useAppActions,
   useAppSelector,
   useSearchVacanciesQuery,
-  ResponseError
+  ResponseError,
+  getLazyComponent
 } from 'shared';
 import { SidebarButton } from 'entities';
+
+const Sidebar = getLazyComponent('widgets', 'Sidebar');
 
 export const Main: FC = () => {
   const [opened, handlers] = useDisclosure(false);

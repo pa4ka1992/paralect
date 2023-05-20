@@ -1,36 +1,26 @@
-import { FC, Suspense, useEffect } from 'react';
+import { FC, Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import { AppShell, Container, Flex } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Header } from 'widgets';
-import {
-  useGetAccessTokenQuery,
-  LOCAL_STORAGE_NAMES,
-  RESPONSE_STATUS,
-  STATUS_MESSAGE,
-  useMatchBreakPoints,
-  ResponseError,
-  Loader
-} from 'shared';
+import { useMatchBreakPoints, Loader, useCheckAuth, ResponseError, RESPONSE_STATUS, STATUS_MESSAGE } from 'shared';
 import { NavbarDrawer } from 'features';
 
 export const Layout: FC = () => {
   const [opened, handlers] = useDisclosure(false);
   const { isMatches } = useMatchBreakPoints('md');
 
-  const { data, isLoading, isSuccess, isError } = useGetAccessTokenQuery(null);
+  const { isError, isLoading } = useCheckAuth();
 
-  useEffect(() => {
-    if (isSuccess && data) {
-      localStorage.setItem(LOCAL_STORAGE_NAMES.access_token, data.access_token);
-    }
-  }, [isSuccess, data]);
-
-  if (isError) {
+  if (isError || isLoading) {
     return (
       <AppShell>
         <Flex align="center" justify="center" h="100%">
-          <ResponseError codeStatus={RESPONSE_STATUS.unauthorized} message={STATUS_MESSAGE.unauthorized} />
+          {isError ? (
+            <ResponseError codeStatus={RESPONSE_STATUS.unauthorized} message={STATUS_MESSAGE.unauthorized} />
+          ) : (
+            <Loader />
+          )}
         </Flex>
       </AppShell>
     );
@@ -48,7 +38,9 @@ export const Layout: FC = () => {
       }}
     >
       <Container p={isMatches ? 'md' : 0} h="100%" size="xl" pos="relative">
-        <Suspense fallback={<Loader />}>{isLoading ? <Loader /> : <Outlet />}</Suspense>
+        <Suspense fallback={<Loader />}>
+          <Outlet />
+        </Suspense>
       </Container>
     </AppShell>
   );

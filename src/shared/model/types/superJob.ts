@@ -1,3 +1,6 @@
+import { BaseQueryApi } from '@reduxjs/toolkit/dist/query';
+import { MaybePromise } from '@reduxjs/toolkit/dist/query/tsHelpers';
+
 export type Authorization = {
   access_token: string;
   refresh_token: string;
@@ -40,3 +43,10 @@ export interface ICatalogue {
   key: number;
   title: string;
 }
+
+export type PrepareHeaders =
+  | ((
+      headers: Headers,
+      api: Pick<BaseQueryApi, 'getState' | 'extra' | 'endpoint' | 'type' | 'forced'>
+    ) => MaybePromise<void | Headers>)
+  | undefined;
