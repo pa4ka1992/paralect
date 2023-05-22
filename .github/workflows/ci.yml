@@ -1,0 +1,47 @@
+name: App CI
+
+on:
+  pull_request:
+    # Run on all branches
+    branches:
+      - '*'
+    # Run only if files modified are not docs
+    paths-ignore:
+      - '*.md'
+
+env:
+  GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+jobs:
+  # Build & Test
+  buildAndTest:
+    continue-on-error: true
+    name: Build & Test
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ env.GITHUB_TOKEN }}
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'pnpm'
+
+      # Install
+      - name: INSTALL
+        run: pnpm install
+
+      # Lint
+      - name: LINT
+        run: pnpm run lint
+
+      # Build
+      - name: BUILD
+        run: pnpm run build
