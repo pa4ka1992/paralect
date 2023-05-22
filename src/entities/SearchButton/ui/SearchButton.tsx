@@ -15,7 +15,7 @@ export const SearchButton: FC<{ isFetching: boolean }> = ({ isFetching }) => {
   }
 
   return (
-    <ActionIcon c="whites.5" disabled={!!isFetching}>
+    <ActionIcon data-elem="search-button" c="whites.5" disabled={!!isFetching}>
       <IconSearch size="20px" stroke={2} />
     </ActionIcon>
   );
